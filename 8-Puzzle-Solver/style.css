@@ -1,0 +1,19 @@
+/* 
+Colors:
+    #1: 4F4F51
+    #2: 2C2B30
+    #2: 1F2833
+    #3: C5C6C7
+    #4: 66FCF1
+    #5: 45A29E
+*/
+
+body {
+    height: 100vh;
+    background-image: linear-gradient(to top, #093b3f 0%, #8ec4c0 100%);
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+
+
+
