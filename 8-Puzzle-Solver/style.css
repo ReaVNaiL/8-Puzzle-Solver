@@ -1,19 +1,107 @@
-/* 
-Colors:
-    #1: 4F4F51
-    #2: 2C2B30
-    #2: 1F2833
-    #3: C5C6C7
-    #4: 66FCF1
-    #5: 45A29E
-*/
-
 body {
     height: 100vh;
     background-image: linear-gradient(to top, #093b3f 0%, #8ec4c0 100%);
+    overflow-y: hidden;
     font-family: 'Source Sans Pro', sans-serif;
 }
 
+.title {
+    width: 20%;
+    margin-left: 50%;
+    margin-right: auto;
+    font-size: 3em;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-top: 1em;
+    text-shadow: #093b3f 0px 0px 10px;
+}
 
+.title:hover {
+    text-shadow: #093b3f 0px 0px 20px;
+    font-size: 4em;
+}
+
+.grid {
+    max-width: 700px;
+    max-height: 600px;
+    min-width: 300px;
+    min-height: 300px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 10px;
+    width: 50%;
+    height: 40%;
+    margin: 0 auto;
+    margin-top: 50px;
+    background-color: #1f2833;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    color: #c5c6c7;
+    background-color: #1f2833;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.grid-item:hover {
+    background-color: #45a29e;
+    color: #fff;
+}
+
+.active {
+    background-color: #79a7a4;
+    opacity: 0.5;
+    scale: 0.98;
+}
+
+.btn {
+    display: block;
+    background-color: #1f2833;
+    color: #C5C6C7;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.btn-box {
+    border: none;
+    width: 200px;
+    height: 50px;
+    margin-left: 5%;
+    margin-right: 5%;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.648);
+}
+
+.btn:hover {
+    scale: 1.2;
+    background-color: #45A29E;
+    color: #1f2833;
+}
+
+.btn-panel {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.ease {
+    transition: all 0.3s ease;
+}
+
+.no-select {
+    user-select: none;
+}
 
 

@@ -2,29 +2,29 @@
 <html>
     <head>
         <title>CSE 545 Project 2</title>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="#">
         <link rel="stylesheet" type="text/css" href="style.css" />
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     </head>
     <body>
-        <h1>8 Puzzle Solver</h1>
-        <div class="grid">
-            <div class="grid-item" id="0">1</div>
-            <div class="grid-item" id="1">2</div>
-            <div class="grid-item" id="2">3</div>
-            <div class="grid-item" id="3">4</div>
-            <div class="grid-item" id="4">5</div>
-            <div class="grid-item" id="5">6</div>
-            <div class="grid-item" id="6">7</div>
-            <div class="grid-item" id="7">8</div>
-            <div class="grid-item" id="8">9</div>
+        <h1 class="title ease">8-Puzzle Solver</h1>
+        <div class="grid ease" id="grid">
+            <div class="grid-item no-select ease" id="5">5</div>
+            <div class="grid-item no-select ease" id="4">4</div>
+            <div class="grid-item no-select ease" id="1">1</div>
+            <div class="grid-item no-select active" id="blank"></div>
+            <div class="grid-item no-select ease" id="2">2</div>
+            <div class="grid-item no-select ease" id="8">8</div>
+            <div class="grid-item no-select ease" id="3">3</div>
+            <div class="grid-item no-select ease" id="6">6</div>
+            <div class="grid-item no-select ease" id="7">7</div>
         </div>
         <div class="btn-panel">
-            <button id="shuffle">Shuffle</button>
-            <button id="solve">Solve</button>
-            <button id="reset">Reset</button>
+            <button class="btn btn-box ease" id="shuffle" onclick="shuffle_grid()">Shuffle</button>
+            <button class="btn btn-box ease" id="solve" onclick="solve_grid()">Solve</button>
+            <button class="btn btn-box ease" id="reset">Reset</button>
         </div>
         <script src="./scripts/index.js"></script>
     </body>
