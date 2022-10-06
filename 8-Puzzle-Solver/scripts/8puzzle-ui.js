@@ -57,6 +57,11 @@ function shiftTile(tileId) {
 
         resetGrid(gridArray);
 
+        if (isSolved()) {
+            toggleCompleted();
+            removeEventListeners();
+        }
+
         return `Tile ${tileId} shifted`;
     }
 
