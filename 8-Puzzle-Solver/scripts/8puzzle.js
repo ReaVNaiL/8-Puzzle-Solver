@@ -1,5 +1,3 @@
-console.clear();
-
 function shuffleGrid() {
     var grid = document.getElementById('grid');
 
@@ -38,11 +36,6 @@ function getCurrentGrid() {
     }
 
     return newGrid;
-}
-
-function getEmptyTile() {
-    return document.getElementsByClassName('empty').value;
-
 }
 
 function solve_grid() {

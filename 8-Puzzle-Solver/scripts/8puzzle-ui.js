@@ -9,12 +9,9 @@ function shiftTile(tileId) {
 }
 
 function getAdjacentElements() {
-    var gridArray = getCurrentGrid();
-
-    var emptyTileIndex = gridArray.indexOf('0');
-    console.log(emptyTileIndex);
-
     var adjacentElements = {};
+    var gridArray = getCurrentGrid();
+    var emptyTileIndex = gridArray.indexOf('0');
 
     // Top element
     if (emptyTileIndex - 3 >= 0) {
@@ -34,25 +31,4 @@ function getAdjacentElements() {
     }
 
     return adjacentElements;
-}
-
-function displayAdjacentElements() {
-    var adjacentElements = getAdjacentElements();
-
-    // add ajacent classes to the tiles
-    for (var key in adjacentElements) {
-        if (adjacentElements.hasOwnProperty(key)) {
-            var tile = document.getElementById(adjacentElements[key]);
-            tile.classList.add("adjacent");
-        }
-    }
-    // wait 1 second and remove the classes
-    setTimeout(function () {
-        for (var key in adjacentElements) {
-            if (adjacentElements.hasOwnProperty(key)) {
-                var tile = document.getElementById(adjacentElements[key]);
-                tile.classList.remove("adjacent");
-            }
-        }
-    }, 500);
 }

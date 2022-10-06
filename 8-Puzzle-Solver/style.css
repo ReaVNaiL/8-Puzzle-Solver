@@ -84,6 +84,21 @@ body {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.648);
 }
 
+.btn2 {
+    display: block;
+    margin-top: 1%;
+    background-color: #614d62;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.btn2:hover {
+    scale: 1.2;
+    background-color: #e7b9ea;
+    color: #1f2833;
+}
+
 .btn:hover {
     scale: 1.2;
     background-color: #45A29E;
