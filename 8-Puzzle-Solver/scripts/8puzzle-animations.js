@@ -6,7 +6,7 @@ function displayAdjacentElements() {
     for (let key in adjacentElements) {
         if (adjacentElements.hasOwnProperty(key)) {
             let tile = document.getElementById(adjacentElements[key]);
-            tile.classList.add("adjacent");
+            tile.classList.add('adjacent');
         }
     }
 
@@ -15,7 +15,7 @@ function displayAdjacentElements() {
         for (let key in adjacentElements) {
             if (adjacentElements.hasOwnProperty(key)) {
                 let tile = document.getElementById(adjacentElements[key]);
-                tile.classList.remove("adjacent");
+                tile.classList.remove('adjacent');
             }
         }
     }, 650);
@@ -33,7 +33,7 @@ function toggleCompleted() {
 // Complete Puzzle Animation
 function puzzleCompleted() {
     //Add background-completed class to body element
-    document.body.classList.add('background-completed'); 
+    document.body.classList.add('background-completed');
 
     document.getElementById('grid').classList.add('completed');
 

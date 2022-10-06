@@ -1,6 +1,9 @@
 /* ------------------ Helper Functions ------------------ */
 function shuffleGridArray(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    var currentIndex = array.length,
+        temporaryValue,
+        randomIndex;
+
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
         // Pick a remaining element...
@@ -11,6 +14,7 @@ function shuffleGridArray(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
+
     return array;
 }
 
@@ -40,6 +44,7 @@ function getCurrentGrid() {
     var gridElements = document
         .getElementById('grid')
         .getElementsByTagName('div');
+        
     var gridArray = Array.from(gridElements);
     var newGrid = [];
 
