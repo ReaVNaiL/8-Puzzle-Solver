@@ -40,6 +40,11 @@ function getCurrentGrid() {
     return newGrid;
 }
 
+function getEmptyTile() {
+    return document.getElementsByClassName('empty').value;
+
+}
+
 function solve_grid() {
     // TODO: Implement this function
 }

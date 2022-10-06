@@ -50,8 +50,14 @@ body {
 }
 
 .grid-item:hover {
-    background-color: #45a29e;
-    color: #fff;
+    background-color: #648a88;
+    color: #1f2833;
+}
+
+.adjacent {
+    transition: all 1.2s ease-out;
+    background-color: #a0ece8;
+    color: #1f2833;
 }
 
 .empty {
