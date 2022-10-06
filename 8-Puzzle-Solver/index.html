@@ -1,4 +1,4 @@
-<!-- Basic Html Structure -->
+<!DOCTYPE html>
 <html>
     <head>
         <title>CSE 545 Project 2</title>
@@ -22,16 +22,18 @@
             <div class="grid-item no-select ease" id="6">6</div>
             <div class="grid-item no-select ease" id="7">7</div>
         </div>
-        <button class="btn2 btn-box ease" onclick="displayAdjacentElements()">Show Adjacents</button>
-        <button class="btn2 btn-box ease" onclick="toggleCompleted()">Toggle Complete</button>
+        <!-- <div class="btn-assist ease">
+            <button class="btn2 btn-box ease " onclick="displayAdjacentElements()">Show Adjacents</button>
+            <button class="btn2 btn-box ease" onclick="toggleCompleted()">Toggle Complete</button>
+        </div>   -->
         <div class="btn-panel">
-            <button class="btn btn-box ease" onclick="resetGrid([5, 4, 1, 0, 2, 8, 3, 6, 7])">Reset</button>
+            <button class="btn btn-box ease" onclick="resetGrid()">Reset</button>
             <button class="btn btn-box ease" onclick="solveGrid()">Solve</button>
             <button class="btn btn-box ease" onclick="shuffleGrid()">Shuffle</button>
         </div>
     </body>
     <script src="./scripts/algo-implementation.js"></script>
     <script src="./scripts/8puzzle-animations.js"></script>
-    <script src="./scripts/8puzzle.js"></script>
     <script src="./scripts/8puzzle-ui.js"></script>
+    <script src="./scripts/8puzzle.js"></script>
 </html>

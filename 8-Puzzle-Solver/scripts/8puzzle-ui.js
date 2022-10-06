@@ -33,17 +33,18 @@ function isAdjacent(tileId) {
             }
         }
     }
-    
+
     return false;
 }
 
-function shiftTile(tileId) {
+function shiftTile() {
+    var tileId = this.id;
     var adjacent = isAdjacent(tileId);
 
     if (adjacent) {
         var gridArray = getCurrentGrid();
         console.log(gridArray);
-        
+
         var emptyTileIndex = gridArray.indexOf('0');
         var tileIndex = gridArray.indexOf(`${tileId}`);
 
@@ -55,11 +56,11 @@ function shiftTile(tileId) {
 
         console.log(gridArray);
 
-        resetGrid(gridArray);
+        drawGrid(gridArray);
 
         if (isSolved()) {
-            toggleCompleted();
-            removeEventListeners();
+            puzzleCompleted();
+            disableEvents();
         }
 
         return `Tile ${tileId} shifted`;
@@ -72,10 +73,14 @@ function shiftTile(tileId) {
 function addTileEventListeners() {
     var tiles = document.getElementsByClassName('grid-item');
     for (var i = 0; i < tiles.length; i++) {
-        tiles[i].addEventListener('click', function () {
-            console.log(shiftTile(this.id));
-        });
+        tiles[i].addEventListener('click', shiftTile, true);
     }
 }
 
-addTileEventListeners();
+// disable input events on all tiles on click
+function disableEvents() {
+    var tiles = document.getElementsByClassName('grid-item');
+    for (var i = 0; i < tiles.length; i++) {
+        tiles[i].removeEventListener('click', shiftTile, true);
+    }
+}
