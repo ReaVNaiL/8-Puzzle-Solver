@@ -1,3 +1,7 @@
+/*
+    Styling for empty, adjacent, and hidden tiles
+*/
+
 .no-select {
     user-select: none;
 }
@@ -18,11 +22,14 @@
     scale: 0.98;
 }
 
+
+/* 
+    These are the completed states for the 8-puzzle game.
+*/
+
 .completed {
-    /* border-radius: 0%; */
-    /* transition: 1.5s ease-out; */
     scale : 1.1;
-    background-color: #45A29E;
+    background-color: #a0ece87e;
     color: #1f2833;
     box-shadow:
         10px 10px #1f283328,
@@ -32,7 +39,10 @@
 }
 
 .completed > .grid-item {
-    /* border-radius: 0%; */
-    background-color: #cefffd;
+    background-color: #b7eeaf;
     color: #1f2833;
+}
+
+.background-completed {
+    background-image: linear-gradient(to top, #093f3a 0%, #99c48e 100%);
 }

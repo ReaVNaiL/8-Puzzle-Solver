@@ -1,6 +1,6 @@
 body {
     height: 100vh;
-    background-image: linear-gradient(to top, #093b3f 0%, #8ec4c0 100%);
+    background-image: linear-gradient(to top, #3f0931 0%, #99c48e 100%);
     overflow-y: hidden;
     font-family: 'Source Sans Pro', sans-serif;
 }
@@ -10,7 +10,7 @@ body {
     font-weight: 700;
     color: #e4faf8;
     text-align: center;
-    margin-top: 1em;
+    margin-top: 3em;
     text-shadow: #093b3f 0px 0px 6px;
 }
 
@@ -27,7 +27,6 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    /* grid-gap: 10px; */
     width: 40%;
     height: 35%;
     margin: 0 auto;
@@ -74,7 +73,7 @@ body {
 
 .btn2 {
     display: block;
-    margin-top: 1%;
+    margin-top: 2%;
     background-color: #614d62;
     color: #ffffff;
     font-size: 20px;
@@ -100,6 +99,14 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: 50px;
+}
+
+.btn-assist {
+    margin-top: 2%;
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    width: 60%;
 }
 
 .ease {
