@@ -8,10 +8,10 @@ body {
 .title {
     font-size: 3em;
     font-weight: 700;
-    color: #fff;
+    color: #e4faf8;
     text-align: center;
     margin-top: 1em;
-    text-shadow: #093b3f 0px 0px 10px;
+    text-shadow: #093b3f 0px 0px 6px;
 }
 
 .title:hover {
@@ -20,24 +20,25 @@ body {
 }
 
 .grid {
-    max-width: 700px;
+    max-width: 600px;
     max-height: 600px;
     min-width: 300px;
     min-height: 300px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    grid-gap: 10px;
-    width: 50%;
-    height: 40%;
+    /* grid-gap: 10px; */
+    width: 40%;
+    height: 35%;
     margin: 0 auto;
     margin-top: 50px;
-    background-color: #1f2833;
+    background-color: #1f283372;
     border-radius: 10px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }
 
 .grid-item {
+    margin: 5%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,7 +54,7 @@ body {
     color: #fff;
 }
 
-.active {
+.empty {
     background-color: #79a7a4;
     opacity: 0.5;
     scale: 0.98;
@@ -68,11 +69,10 @@ body {
 }
 
 .btn-box {
-    border: none;
     width: 200px;
-    height: 50px;
-    margin-left: 5%;
-    margin-right: 5%;
+    height: 60px;
+    margin-left: 3%;
+    margin-right: 3%;
     border: none;
     border-radius: 15px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.648);
