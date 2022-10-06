@@ -14,11 +14,6 @@ body {
     text-shadow: #093b3f 0px 0px 6px;
 }
 
-.title:hover {
-    text-shadow: #093b3f 0px 0px 20px;
-    font-size: 4em;
-}
-
 .grid {
     max-width: 600px;
     max-height: 600px;
@@ -74,7 +69,7 @@ body {
 .btn2 {
     display: block;
     margin-top: 2%;
-    background-color: #614d62;
+    background-color: #443e44;
     color: #ffffff;
     font-size: 20px;
     font-weight: bold;
@@ -88,8 +83,8 @@ body {
 
 .btn:hover {
     scale: 1.2;
-    background-color: #45A29E;
-    color: #1f2833;
+    /* background-color: #45A29E; */
+    background-color: #45a29d0c;
 }
 
 .btn-panel {
@@ -106,7 +101,7 @@ body {
     position: absolute;
     top: 15%;
     left: 25%;
-    width: 60%;
+    width: 15%;
 }
 
 .ease {

@@ -1,12 +1,18 @@
-/* ------------------ Draw Grid Function ------------------ */
-function createRandomArray() {
-    var randomArray = [];
-    for (var i = 0; i < 9; i++) {
-        randomArray.push(Math.floor(Math.random() * 9));
+/* ------------------ Helper Functions ------------------ */
+function shuffleGridArray(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
     }
-    return randomArray;
+    return array;
 }
-
 
 /* ------------------ Draw Grid Function ------------------ */
 function drawGrid(defaultGrid) {
@@ -25,8 +31,9 @@ function resetGrid() {
 }
 
 function shuffleGrid() {
-    var randomArray = createRandomArray();
-    drawGrid(randomArray);
+    resetGrid();
+    var gridArray = getCurrentGrid();
+    drawGrid(shuffleGridArray(gridArray));
 }
 
 function getCurrentGrid() {

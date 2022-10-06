@@ -21,6 +21,15 @@ function displayAdjacentElements() {
     }, 650);
 }
 
+// Toggle Complete Puzzle Button
+function toggleCompleted() {
+    if (document.getElementById('grid').classList.contains('completed')) {
+        initializePuzzle();
+    } else {
+        puzzleCompleted();
+    }
+}
+
 // Complete Puzzle Animation
 function puzzleCompleted() {
     //Add background-completed class to body element
@@ -34,7 +43,8 @@ function puzzleCompleted() {
     }
 
     let text = document.getElementsByClassName('title');
-    text[0].textContent = 'Completed!';
+    text[0].textContent = 'Puzzle Completed!';
+    text[0].classList.add('title-completed');
 }
 
 // Reset Puzzle Animations
@@ -50,4 +60,5 @@ function initializePuzzle() {
 
     let text = document.getElementsByClassName('title');
     text[0].textContent = '8-Puzzle Solver';
+    text[0].classList.remove('title-completed');
 }
