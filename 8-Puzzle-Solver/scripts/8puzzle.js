@@ -42,9 +42,7 @@ function solveGrid() {
 }
 
 // Reset Grid using the current grid;
-function resetGrid() {
-    defaultGrid = [5, 4, 1, 0, 2, 8, 3, 7, 6];
-
+function resetGrid(defaultGrid) {
     for (var i = 0; i < defaultGrid.length; i++) {
         var tile = document.getElementById(defaultGrid[i]);
         var grid = document.getElementById('grid');

@@ -41,12 +41,21 @@ function shiftTile(tileId) {
     var adjacent = isAdjacent(tileId);
     console.log(adjacent);
 
-    if (isAdjacent(tileId)) {
-        var grid = document.getElementById('grid');
-        var tile = document.getElementById(tileId);
-        var emptyTile = document.getElementById('0');
+    if (adjacent) {
+        var gridArray = getCurrentGrid();
+        console.log(gridArray);
+        
+        var emptyTileIndex = gridArray.indexOf('0');
+        var tileIndex = gridArray.indexOf(`${tileId}`);
 
-        grid.insertBefore(tile, emptyTile);
+        console.log(`Empty Tile Index: ${emptyTileIndex}`);
+        console.log(`Tile Index: ${tileIndex}`);
+
+        gridArray[emptyTileIndex] = gridArray[tileIndex];
+        gridArray[tileIndex] = '0';
+
+        console.log(gridArray);
+
+        resetGrid(gridArray);
     }
 }
-
