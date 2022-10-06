@@ -1,13 +1,3 @@
-function shiftTile(tileId) {
-    var tile = document.getElementById(tileId);
-    var emptyTile = document.getElementById('0');
-
-    return {
-        tile: tile,
-        emptyTile: emptyTile,
-    };
-}
-
 function getAdjacentElements() {
     var adjacentElements = {};
     var gridArray = getCurrentGrid();
@@ -32,3 +22,31 @@ function getAdjacentElements() {
 
     return adjacentElements;
 }
+
+function isAdjacent(tileId) {
+    var adjacentElements = getAdjacentElements();
+
+    for (var key in adjacentElements) {
+        if (adjacentElements.hasOwnProperty(key)) {
+            if (adjacentElements[key] == tileId) {
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+function shiftTile(tileId) {
+    var adjacent = isAdjacent(tileId);
+    console.log(adjacent);
+
+    if (isAdjacent(tileId)) {
+        var grid = document.getElementById('grid');
+        var tile = document.getElementById(tileId);
+        var emptyTile = document.getElementById('0');
+
+        grid.insertBefore(tile, emptyTile);
+    }
+}
+

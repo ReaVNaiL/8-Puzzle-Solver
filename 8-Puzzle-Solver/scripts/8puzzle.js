@@ -4,13 +4,13 @@ function shuffleGrid() {
     var gridElements = grid.getElementsByTagName('div');
     var gridArray = Array.from(gridElements);
 
-    gridArray = shuffle(gridArray);
+    gridArray = shuffleGridArray(gridArray);
     for (var i = 0; i < gridArray.length; i++) {
         grid.appendChild(gridArray[i]);
     }
 }
 
-function shuffle(array) {
+function shuffleGridArray(array) {
     var currentIndex = array.length,
         temp,
         randomIndex;
@@ -26,8 +26,7 @@ function shuffle(array) {
 }
 
 function getCurrentGrid() {
-    var grid = document.getElementById('grid');
-    var gridElements = grid.getElementsByTagName('div');
+    var gridElements = document.getElementById('grid').getElementsByTagName('div');
     var gridArray = Array.from(gridElements);
     var newGrid = [];
 
@@ -38,6 +37,17 @@ function getCurrentGrid() {
     return newGrid;
 }
 
-function solve_grid() {
+function solveGrid() {
     // TODO: Implement this function
+}
+
+// Reset Grid using the current grid;
+function resetGrid() {
+    defaultGrid = [5, 4, 1, 0, 2, 8, 3, 7, 6];
+
+    for (var i = 0; i < defaultGrid.length; i++) {
+        var tile = document.getElementById(defaultGrid[i]);
+        var grid = document.getElementById('grid');
+        grid.appendChild(tile);
+    }
 }
