@@ -39,7 +39,6 @@ function isAdjacent(tileId) {
 
 function shiftTile(tileId) {
     var adjacent = isAdjacent(tileId);
-    console.log(adjacent);
 
     if (adjacent) {
         var gridArray = getCurrentGrid();
@@ -57,5 +56,21 @@ function shiftTile(tileId) {
         console.log(gridArray);
 
         resetGrid(gridArray);
+
+        return `Tile ${tileId} shifted`;
+    }
+
+    return `Could not shift tile ${tileId}`;
+}
+
+// add event listeners to all tiles on click
+function addTileEventListeners() {
+    var tiles = document.getElementsByClassName('grid-item');
+    for (var i = 0; i < tiles.length; i++) {
+        tiles[i].addEventListener('click', function () {
+            console.log(shiftTile(this.id));
+        });
     }
 }
+
+addTileEventListeners();
