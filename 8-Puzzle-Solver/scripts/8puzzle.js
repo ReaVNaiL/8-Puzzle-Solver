@@ -49,3 +49,22 @@ function resetGrid(defaultGrid) {
         grid.appendChild(tile);
     }
 }
+
+// Not Needed
+// Toggle grid class complete
+function toggleCompleted() {
+    var grid = document.getElementById('grid');
+    grid.classList.toggle('completed');
+}
+
+function isSolved() {
+    var gridArray = getCurrentGrid();
+    var solvedGrid = ['1', '2', '3', '4', '5', '6', '7', '8', '0'];
+
+    for (var i = 0; i < gridArray.length; i++) {
+        if (gridArray[i] != solvedGrid[i]) {
+            return false;
+        }
+    }
+    return true;
+}
