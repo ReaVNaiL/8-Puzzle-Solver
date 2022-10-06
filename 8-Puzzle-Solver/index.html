@@ -14,7 +14,7 @@
             <div class="grid-item no-select ease" id="5">5</div>
             <div class="grid-item no-select ease" id="4">4</div>
             <div class="grid-item no-select ease" id="1">1</div>
-            <div class="grid-item no-select empty" id="0"></div>
+            <div class="grid-item hidden" id="0"></div>
             <div class="grid-item no-select ease" id="2">2</div>
             <div class="grid-item no-select ease" id="8">8</div>
             <div class="grid-item no-select ease" id="3">3</div>
@@ -22,11 +22,12 @@
             <div class="grid-item no-select ease" id="7">7</div>
         </div>
         <div class="btn-panel">
-            <button class="btn btn-box ease" id="shuffle" onclick="shuffle_grid()">Shuffle</button>
-            <button class="btn btn-box ease" id="solve" onclick="solve_grid()">Solve</button>
+            <button class="btn btn-box ease" id="shuffle" onclick="shuffleGrid()">Shuffle</button>
+            <button class="btn btn-box ease" id="solve" onclick="solveGrid()">Solve</button>
             <button class="btn btn-box ease" id="reset">Reset</button>
         </div>
         <script src="./scripts/algo-implementation.js"></script>
         <script src="./scripts/8puzzle.js"></script>
+        <script src="./scripts/8puzzle-ui.js"></script>
     </body>
 </html>

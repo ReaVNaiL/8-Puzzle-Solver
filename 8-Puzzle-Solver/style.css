@@ -101,4 +101,7 @@ body {
     user-select: none;
 }
 
+.hidden {
+    opacity: 0;
+}
 

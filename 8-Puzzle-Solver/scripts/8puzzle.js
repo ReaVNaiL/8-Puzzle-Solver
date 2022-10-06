@@ -1,43 +1,43 @@
 console.clear();
 
-function shuffle_grid() {
+function shuffleGrid() {
     var grid = document.getElementById('grid');
 
-    var grid_elements = grid.getElementsByTagName('div');
-    var grid_elements_array = Array.from(grid_elements);
+    var gridElements = grid.getElementsByTagName('div');
+    var gridArray = Array.from(gridElements);
 
-    grid_elements_array = shuffle(grid_elements_array);
-    for (var i = 0; i < grid_elements_array.length; i++) {
-        grid.appendChild(grid_elements_array[i]);
+    gridArray = shuffle(gridArray);
+    for (var i = 0; i < gridArray.length; i++) {
+        grid.appendChild(gridArray[i]);
     }
 }
 
 function shuffle(array) {
     var currentIndex = array.length,
-        temporaryValue,
+        temp,
         randomIndex;
 
     while (0 !== currentIndex) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
-        temporaryValue = array[currentIndex];
+        temp = array[currentIndex];
         array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+        array[randomIndex] = temp;
     }
     return array;
 }
 
-function get_current_grid() {
+function getCurrentGrid() {
     var grid = document.getElementById('grid');
-    var grid_elements = grid.getElementsByTagName('div');
-    var grid_elements_array = Array.from(grid_elements);
-    var grid_array = [];
+    var gridElements = grid.getElementsByTagName('div');
+    var gridArray = Array.from(gridElements);
+    var newGrid = [];
 
-    for (var i = 0; i < grid_elements_array.length; i++) {
-        grid_array.push(grid_elements_array[i].innerHTML);
+    for (var i = 0; i < gridArray.length; i++) {
+        newGrid.push(gridArray[i].innerHTML);
     }
 
-    return grid_array;
+    return newGrid;
 }
 
 function solve_grid() {
