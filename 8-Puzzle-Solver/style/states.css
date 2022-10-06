@@ -1,0 +1,38 @@
+.no-select {
+    user-select: none;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.adjacent {
+    transition: all 0.3s ease-in-out;
+    background-color: #a0ece8;
+    color: #1f2833;
+}
+
+.empty {
+    background-color: #79a7a4;
+    opacity: 0.5;
+    scale: 0.98;
+}
+
+.completed {
+    /* border-radius: 0%; */
+    /* transition: 1.5s ease-out; */
+    scale : 1.1;
+    background-color: #45A29E;
+    color: #1f2833;
+    box-shadow:
+        10px 10px #1f283328,
+        11px 11px #1f283348,
+        12px 12px #1f28331e;
+    transform: translateX(-5px);
+}
+
+.completed > .grid-item {
+    /* border-radius: 0%; */
+    background-color: #cefffd;
+    color: #1f2833;
+}

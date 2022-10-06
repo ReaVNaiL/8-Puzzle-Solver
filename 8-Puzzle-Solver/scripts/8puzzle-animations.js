@@ -9,7 +9,7 @@ function displayAdjacentElements() {
             tile.classList.add("adjacent");
         }
     }
-    // wait 500 ms and remove the classes
+    // wait 650 ms and remove the classes
     setTimeout(function () {
         for (var key in adjacentElements) {
             if (adjacentElements.hasOwnProperty(key)) {
@@ -17,5 +17,5 @@ function displayAdjacentElements() {
                 tile.classList.remove("adjacent");
             }
         }
-    }, 500);
+    }, 650);
 }
