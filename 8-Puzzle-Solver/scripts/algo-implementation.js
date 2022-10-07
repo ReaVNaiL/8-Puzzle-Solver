@@ -46,3 +46,14 @@ grid = [5, 4, 1, 0, 2, 8, 3, 6, 7];
 // 3- The adjacent tiles are the tiles that are horizontally or vertically adjacent to the empty tile
 // 4- The empty tile can't be moved diagonally
 
+function heuristic(node) {
+    // Manhattan distance
+    let h = 0;
+    for (let i = 0; i < node.length; i++) {
+        if (node[i] != 0) {
+            h += Math.abs(Math.floor(i / 3) - Math.floor((node[i] - 1) / 3)) + Math.abs((i % 3) - ((node[i] - 1) % 3));
+        }
+    }
+    return h;
+}
+
