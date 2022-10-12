@@ -4,10 +4,6 @@ function getAdjacentElements() {
     var gridArray = getCurrentGrid();
     var emptyTileIndex = gridArray.indexOf('0');
 
-    if (emptyTileIndex - 3 >= 0) {
-        adjacentElements.push(gridArray[emptyTileIndex - 3]);
-    }
-
     // Top element
     if (emptyTileIndex - 3 >= 0) {
         adjacentElements.push(gridArray[emptyTileIndex - 3]);
