@@ -18,6 +18,20 @@ function shuffleGridArray(array) {
     return array;
 }
 
+// Finds the element that was moved between two grids
+function findMovedElement(grid1, grid2) {
+    let movedElement = 0;
+
+    for (let i = 0; i < grid1.length; i++) {
+        if (grid1[i] != grid2[i] && grid1[i] != 0) {
+            movedElement = grid1[i];
+        }
+    }
+    
+    return movedElement;
+}
+
+
 /* ------------------ Draw Grid Function ------------------ */
 function drawGrid(defaultGrid) {
     for (var i = 0; i < defaultGrid.length; i++) {

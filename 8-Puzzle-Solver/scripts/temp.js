@@ -185,16 +185,14 @@ function printGrid(grid) {
 // Print Solution
 async function printSolution(solution) {
     console.log("Solution: \n");
+    drawGrid(solution[0]);
     for (let i = 0; i < solution.length; i++) {
         console.log("Step ", i, ": \n" + printGrid(solution[i]));
-        // console.log(printGrid(solution[i]));
-        let newSol = convertToStringArray(solution[i]);
-        // wait for 1 second
 
-        await new Promise(resolve => setTimeout(resolve, 500));
-        drawGrid(newSol);
+        await displaySolution(solution, i);
     }
     puzzleCompleted();
+    disableEvents();
 }
 
 // Convert Int Array to String Array
@@ -205,10 +203,3 @@ function convertToStringArray(intArray) {
     }
     return stringArray;
 }
-
-
-// Run Program
-// Measure the time it takes to solve the puzzle
-
-// let solution = aStarSearch(grid, goalGrid);
-// printSolution(solution);

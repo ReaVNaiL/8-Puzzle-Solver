@@ -31,7 +31,7 @@ Notes for A* algorithm:
     
 */  
 // The grid is represented as a 1D array
-grid = [5, 4, 1, 0, 2, 8, 3, 6, 7];
+// grid = [5, 4, 1, 0, 2, 8, 3, 6, 7];
 
 // Rules:
 // 1- The grid is represented as a 1D array
