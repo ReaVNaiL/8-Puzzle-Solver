@@ -36,8 +36,14 @@ function resetGrid() {
 
 function shuffleGrid() {
     resetGrid();
-    var gridArray = getCurrentGrid();
-    drawGrid(shuffleGridArray(gridArray));
+
+    let newGrid = shuffleGridArray(getCurrentGrid());
+    
+    while(!isSolutionPossible(newGrid)) {
+        shuffleGridArray(newGrid);
+    }
+
+    drawGrid(newGrid);
 }
 
 function getCurrentGrid() {
@@ -71,21 +77,34 @@ function getCurrentGridInt() {
 }
 
 function solveGrid() {
+    initializePuzzle();
+    addTileEventListeners();
+    
     let goalGrid = [1, 2, 3, 4, 5, 6, 7, 8, 0];
-    // let grid = getCurrentGridInt();
+    let grid = getCurrentGridInt();
+    
+    // let grid = [ 1, 2, 3, 4, 0, 6, 7, 5, 8 ] // Easy Puzzle
     // let grid = [0, 1, 2, 4, 5, 3, 6, 7, 8]; // Medium Puzzle
-    let grid = [ 4, 0, 1, 5, 3, 2, 6, 7, 8]; // Harder Puzzle
+    // let grid = [ 4, 0, 1, 5, 3, 2, 6, 7, 8]; // Harder Puzzle
     // let grid = [5, 4, 1, 0, 2, 8, 3, 6, 7]; // Should Be Solving The Puzzle
-    let start = new Date();
+    
+    let canBeSolved = isSolutionPossible(grid);
 
-    aStarSearch(grid, goalGrid).then((solution) => {
-        let end = new Date();
-        let time = end - start;
-        console.log("Time: ", time);
-        // Update time in HTML
-        document.getElementById('time').innerHTML = "Time: " + time + " ms";
-        printSolution(solution);
-    });
+    if (canBeSolved) {
+        
+        let start = new Date();
+
+        aStarSearch(grid, goalGrid).then((solution) => {
+            let end = new Date();
+            let time = end - start;
+            console.log("Time: ", time);
+            // Update time in HTML
+            document.getElementById('time').innerHTML = "Time: " + time + " ms";
+            printSolution(solution);
+        });
+    } else {
+        alert("This puzzle cannot be solved!");
+    }
 }
 
 function isSolved() {

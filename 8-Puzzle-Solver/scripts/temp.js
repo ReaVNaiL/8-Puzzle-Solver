@@ -1,7 +1,7 @@
 // 8 Puzzle Solver
-// let grid = [5, 4, 1, 0, 2, 8, 3, 6, 7];
+// let grid = 541028367;
 // let grid = [0, 1, 2, 4, 5, 3, 6, 7, 8]; // Medium Puzzle
-let grid = [ 4, 0, 1, 5, 3, 2, 6, 7, 8]; // Harder Puzzle
+// let grid = [ 4, 0, 1, 5, 3, 2, 6, 7, 8]; // Harder Puzzle
 // let grid = [5, 4, 1, 0, 2, 8, 3, 6, 7]; // Should Be Solving The Puzzle
 // let grid = [4, 1, 0, 5, 3, 2, 6, 7, 8];
 let goalGrid = [1, 2, 3, 4, 5, 6, 7, 8, 0];
@@ -13,7 +13,17 @@ async function aStarSearch(grid, goalGrid) {
     let startNode = new Node(grid, 0, 0, null);
     openList.push(startNode);
 
+    // Helper
+    let bestCost = 0;
+    let numberOfNodes = 0;
+    let deepestDepth = 0;
+
     while (openList.length > 0) {
+        // Only await 1ms to allow the UI to update every 20 iterations
+        if (openList.length % 10 === 0) {
+            await new Promise(resolve => setTimeout(resolve, 1));
+            displayAdjacentElements(1);
+        }
         let currentNode = openList[0];
         let currentIndex = 0;
         for (let i = 0; i < openList.length; i++) {
@@ -31,12 +41,12 @@ async function aStarSearch(grid, goalGrid) {
                 path.push(current.grid);
                 current = current.parent;
             }
+            console.log("Solution Found! \nNumber of Moves:", deepestDepth, "\nNumber of Nodes:", numberOfNodes, "\nMax Cost:", bestCost);
             return path.reverse();
         }
         let children = [];
         let possibleMoves = await getPossibleMoves(currentNode.grid);
         // Wait for 1 second
-        await new Promise(resolve => setTimeout(resolve, 1));
         for (let i = 0; i < possibleMoves.length; i++) {
             let newGrid = await swap(
                 currentNode.grid,
@@ -45,6 +55,7 @@ async function aStarSearch(grid, goalGrid) {
             );
             let newNode = new Node(newGrid, currentNode.g + 1, 0, currentNode);
             children.push(newNode);
+            numberOfNodes++;
         }
 
         if (children.length > 0) {
@@ -62,15 +73,21 @@ async function aStarSearch(grid, goalGrid) {
                 }
                 child.h = await heuristic(child.grid, goalGrid);
                 child.f = child.g + child.h;
-                console.log("State: ", child.grid, "f: ", child.f, "g: ", child.g, "h: ", child.h);
+                console.log("State: ", child.grid, "\nTotal Cost: ", child.f, "Depth: ", child.g, "Distance: ", child.h, "Deepest Leaf: ", deepestDepth);
 
                 /* This is addons. */
-                // console.log(printGrid(solution[i]));
                 let newSol = convertToStringArray(child.grid);
-                // wait for 1 second
+                // // wait for 1 second
                 drawGrid(newSol);
-                displayAdjacentElements(1);
                 
+                if (child.g > deepestDepth) {
+                    deepestDepth = child.g;
+                }
+
+                if (child.f > bestCost) {
+                    bestCost = child.f;
+                }
+
                 let inOpenList = false;
                 for (let j = 0; j < openList.length; j++) {
                     if (child.grid.toString() === openList[j].grid.toString()) {
@@ -155,11 +172,11 @@ function printGrid(grid) {
     let gridString = "";
     for (let i = 0; i < grid.length; i++) {
         if (i % 3 === 0) {
-            gridString += "\n[ ";
+            gridString += "[ ";
         }
         gridString += grid[i] + " ";
         if (i % 3 === 2) {
-            gridString += "]";
+            gridString += "]\n";
         }
     }
     return gridString;
@@ -167,7 +184,9 @@ function printGrid(grid) {
 
 // Print Solution
 async function printSolution(solution) {
+    console.log("Solution: \n");
     for (let i = 0; i < solution.length; i++) {
+        console.log("Step ", i, ": \n" + printGrid(solution[i]));
         // console.log(printGrid(solution[i]));
         let newSol = convertToStringArray(solution[i]);
         // wait for 1 second
