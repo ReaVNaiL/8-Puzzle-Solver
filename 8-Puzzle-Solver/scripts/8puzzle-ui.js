@@ -4,21 +4,16 @@ function getAdjacentElements(gridArray) {
     var emptyTileIndex = gridArray.indexOf('0');
 
     // Top element
-    if (emptyTileIndex - 3 >= 0) {
-        adjacentElements.push(gridArray[emptyTileIndex - 3]);
-    }
+    if (emptyTileIndex - 3 >= 0) adjacentElements.push(gridArray[emptyTileIndex - 3]);
+    
     // Bottom element
-    if (emptyTileIndex + 3 <= 8) {
-        adjacentElements.push(gridArray[emptyTileIndex + 3]);
-    }
+    if (emptyTileIndex + 3 <= 8) adjacentElements.push(gridArray[emptyTileIndex + 3]);
+    
     // Left element
-    if (emptyTileIndex - 1 >= 0 && emptyTileIndex % 3 != 0) {
-        adjacentElements.push(gridArray[emptyTileIndex - 1]);
-    }
+    if (emptyTileIndex - 1 >= 0 && emptyTileIndex % 3 != 0) adjacentElements.push(gridArray[emptyTileIndex - 1]);
+    
     // Right element
-    if (emptyTileIndex + 1 <= 8 && emptyTileIndex % 3 != 2) {
-        adjacentElements.push(gridArray[emptyTileIndex + 1]);
-    }
+    if (emptyTileIndex + 1 <= 8 && emptyTileIndex % 3 != 2) adjacentElements.push(gridArray[emptyTileIndex + 1]);
 
     return adjacentElements;
 }
