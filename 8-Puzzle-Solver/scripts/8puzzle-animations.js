@@ -1,5 +1,7 @@
 // Complete Puzzle Animation
 function puzzleCompleted() {
+    hideButtons();
+
     //Add background-completed class to body element
     document.body.classList.add('background-completed');
 
@@ -17,6 +19,8 @@ function puzzleCompleted() {
 
 // Reset Puzzle Animations
 function initializePuzzle() {
+    resetButtons();
+
     document.body.classList.remove('background-completed');
     document.getElementById('grid').classList.remove('completed');
 
@@ -29,6 +33,40 @@ function initializePuzzle() {
     let text = document.getElementsByClassName('title');
     text[0].textContent = '8-Puzzle Solver';
     text[0].classList.remove('title-completed');
+}
+
+// Hide Reset/Solve Buttons
+function hideButtons() {
+    let solveButton = document.getElementById('solve');
+    let resetButton = document.getElementById('reset');
+    let shuffleButton = document.getElementById('shuffle');
+    let solutionButton = document.getElementById('solution');
+
+    solveButton.classList.add('remove');
+    resetButton.classList.add('remove');
+    shuffleButton.classList.remove('remove');
+    solutionButton.classList.remove('remove');
+}
+
+// Hide all Buttons
+function hideAllButtons() {
+    let buttons = document.getElementsByClassName('btn');
+
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.add('remove');
+    }
+}
+
+// Reset Default Buttons
+function resetButtons() {
+    let solveButton = document.getElementById('solve');
+    let resetButton = document.getElementById('reset');
+    let shuffleButton = document.getElementById('shuffle');
+    let solutionButton = document.getElementById('solution');
+
+    solveButton.classList.remove('remove');
+    resetButton.classList.remove('remove');
+    solutionButton.classList.add('remove');
 }
 
 // Toggle Complete Puzzle Button
@@ -78,7 +116,7 @@ function highlightMovedTile(grid1, grid2) {
     }, 300);
 }
 
-/* Function to display animation of solution once found. */
+/*-- Function to display animation of solution once found. --*/
 async function displaySolution(solutionArr, index) {
     // Saving Grids to variables
     let currentGrid = convertToStringArray(solutionArr[index]);

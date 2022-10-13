@@ -18,6 +18,15 @@ function shuffleGridArray(array) {
     return array;
 }
 
+// Convert Int Array to String Array
+function convertToStringArray(intArray) {
+    let stringArray = [];
+    for (let i = 0; i < intArray.length; i++) {
+        stringArray.push(intArray[i].toString());
+    }
+    return stringArray;
+}
+
 // Finds the element that was moved between two grids
 function findMovedElement(grid1, grid2) {
     let movedElement = 0;
@@ -27,7 +36,7 @@ function findMovedElement(grid1, grid2) {
             movedElement = grid1[i];
         }
     }
-    
+
     return movedElement;
 }
 
@@ -92,11 +101,11 @@ function getCurrentGridInt() {
 
 function solveGrid() {
     initializePuzzle();
-    addTileEventListeners();
-    
+
     let goalGrid = [1, 2, 3, 4, 5, 6, 7, 8, 0];
     let grid = getCurrentGridInt();
     
+    /* Test Cases */
     // let grid = [ 1, 2, 3, 4, 0, 6, 7, 5, 8 ] // Easy Puzzle
     // let grid = [0, 1, 2, 4, 5, 3, 6, 7, 8]; // Medium Puzzle
     // let grid = [ 4, 0, 1, 5, 3, 2, 6, 7, 8]; // Harder Puzzle
@@ -105,20 +114,38 @@ function solveGrid() {
     let canBeSolved = isSolutionPossible(grid);
 
     if (canBeSolved) {
-        
+        disableEvents();
+        hideAllButtons();
         let start = new Date();
 
         aStarSearch(grid, goalGrid).then((solution) => {
             let end = new Date();
             let time = end - start;
             console.log("Time: ", time);
+
+            if (isSolved()) {
+                puzzleCompleted();
+                disableEvents();
+            }
+
             // Update time in HTML
             document.getElementById('time').innerHTML = "Time: " + time + " ms";
-            printSolution(solution);
+            
+            // Wait for click event on solution button
+            document.getElementById('solution').addEventListener('click', () => {
+                // Animate solution
+                initializePuzzle();
+                hideAllButtons();
+                printSolution(solution);
+            });
         });
     } else {
         alert("This puzzle cannot be solved!");
     }
+}
+
+function showSolution() {
+    
 }
 
 function isSolved() {

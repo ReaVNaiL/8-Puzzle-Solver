@@ -8,6 +8,10 @@
     opacity: 0;
 }
 
+.remove {
+    display: none;
+}
+
 .adjacent {
     transition: all 0.4s ease-in-out;
     background-color: #a0ece8;

@@ -194,12 +194,3 @@ async function printSolution(solution) {
     puzzleCompleted();
     disableEvents();
 }
-
-// Convert Int Array to String Array
-function convertToStringArray(intArray) {
-    let stringArray = [];
-    for (let i = 0; i < intArray.length; i++) {
-        stringArray.push(intArray[i].toString());
-    }
-    return stringArray;
-}
