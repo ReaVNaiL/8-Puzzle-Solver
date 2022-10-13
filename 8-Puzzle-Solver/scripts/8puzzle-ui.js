@@ -1,7 +1,6 @@
-function getAdjacentElements() {
+function getAdjacentElements(gridArray) {
     var adjacentElements = [];
 
-    var gridArray = getCurrentGrid();
     var emptyTileIndex = gridArray.indexOf('0');
 
     // Top element
@@ -25,7 +24,8 @@ function getAdjacentElements() {
 }
 
 function isAdjacent(tileId) {
-    var adjacentElements = getAdjacentElements();
+    gridArray = getCurrentGrid();
+    var adjacentElements = getAdjacentElements(gridArray);
 
     if (adjacentElements.includes(tileId)) {
         return true;

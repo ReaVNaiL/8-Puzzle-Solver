@@ -1,6 +1,7 @@
 // Display Adjacent Elements
 function displayAdjacentElements() {
-    let adjacentElements = getAdjacentElements();
+    var gridArray = getCurrentGrid();
+    let adjacentElements = getAdjacentElements(gridArray);
 
     // add ajacent classes to the tiles
     for (let key in adjacentElements) {
