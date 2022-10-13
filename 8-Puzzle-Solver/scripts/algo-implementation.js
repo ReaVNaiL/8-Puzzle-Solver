@@ -40,30 +40,27 @@ grid = [5, 4, 1, 0, 2, 8, 3, 6, 7];
 // 4- The empty tile can't be moved diagonally
 
 function distanceFromGoal(currTileIndex, goalIndex) {
-    // The distance between the tile and its goal position
-    // The goal position is the index of the tile in the goal state
-    // The goal state is [1, 2, 3, 4, 5, 6, 7, 8, 0]    
-    console.log("tile: " + currTileIndex + " goal: " + goalIndex);
-    return Math.abs(goalIndex - currTileIndex);
+    // Get the rows. The grid is 3x3, so the rows are 0, 1, 2
+    let rows = [Math.floor(currTileIndex / 3), Math.floor(goalIndex / 3)]
+
+    // Get the columns.
+    let columns = [currTileIndex % 3, goalIndex % 3];
+
+    // Calculate the distance x2 - x1 + y2 - y1
+    return Math.abs(rows[0] - rows[1]) + Math.abs(columns[0] - columns[1]);
 }
 
 function heuristicCost(state) {
-    // The heuristic cost of the state
-    // The heuristic cost is the sum of the distances of the tiles from their goal positions
-    // The goal state is [1, 2, 3, 4, 5, 6, 7, 8, 0]
-    let goalGrid = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+    let solutionGrid = [1, 2, 3, 4, 5, 6, 7, 8, 0];
     let cost = 0;
+
     for (let i = 0; i < state.length; i++) {
+        let tile = parseInt(state[i]);
         if (state[i] != 0) {
-            // The distance between the tile and its goal position 
-            let tileCost = distanceFromGoal(i, goalGrid.indexOf(state[i]));
-            console.log("\tDistance from goal of tile " + state[i] + " is " + tileCost);
-            cost += tileCost;
+            let distance = distanceFromGoal(i, solutionGrid.indexOf(tile));
+            cost += distance;
         }
     }
+    console.log("State", state, "Cost: ", cost);
     return cost;
 }
-
-// Pass the initial state to the heuristicCost function
-console.log(heuristicCost(grid));
-
