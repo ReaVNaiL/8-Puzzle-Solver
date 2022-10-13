@@ -1,5 +1,5 @@
 // Display Adjacent Elements
-function displayAdjacentElements() {
+function displayAdjacentElements(time) {
     var gridArray = getCurrentGrid();
     let adjacentElements = getAdjacentElements(gridArray);
 
@@ -19,7 +19,7 @@ function displayAdjacentElements() {
                 tile.classList.remove('adjacent');
             }
         }
-    }, 650);
+    }, time);
 }
 
 // Toggle Complete Puzzle Button

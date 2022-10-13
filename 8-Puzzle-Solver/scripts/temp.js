@@ -69,7 +69,7 @@ async function aStarSearch(grid, goalGrid) {
                 let newSol = convertToStringArray(child.grid);
                 // wait for 1 second
                 drawGrid(newSol);
-                
+                displayAdjacentElements(1);
                 
                 let inOpenList = false;
                 for (let j = 0; j < openList.length; j++) {
@@ -171,6 +171,7 @@ async function printSolution(solution) {
         // console.log(printGrid(solution[i]));
         let newSol = convertToStringArray(solution[i]);
         // wait for 1 second
+
         await new Promise(resolve => setTimeout(resolve, 500));
         drawGrid(newSol);
     }
