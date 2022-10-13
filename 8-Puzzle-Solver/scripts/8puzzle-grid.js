@@ -137,6 +137,7 @@ function solveGrid() {
                 initializePuzzle();
                 hideAllButtons();
                 printSolution(solution);
+                showAllButtons();
             });
         });
     } else {

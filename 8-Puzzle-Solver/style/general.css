@@ -49,6 +49,7 @@ body {
 }
 
 .btn {
+    transition: all 0.3s ease;
     display: block;
     background-color: #1f2833;
     color: #C5C6C7;
@@ -102,8 +103,36 @@ body {
     left: 25%;
     width: 15%;
 }
-
 .ease {
     transition: all 0.3s ease;
+}
+
+/* opacity 1s transition animation */
+.fade-in {
+    opacity: 0;
+    animation: fade-in 0.2s ease-in forwards;
+}
+
+.fade-out {
+    opacity: 1;
+    animation: fade-out 0.2s ease-in forwards;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 

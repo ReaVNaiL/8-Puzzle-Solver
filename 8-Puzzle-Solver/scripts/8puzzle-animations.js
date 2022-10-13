@@ -51,10 +51,32 @@ function hideButtons() {
 // Hide all Buttons
 function hideAllButtons() {
     let buttons = document.getElementsByClassName('btn');
-
     for (let i = 0; i < buttons.length; i++) {
-        buttons[i].classList.add('remove');
+        buttons[i].classList.add('fade-out');
     }
+
+    // Wait 1 second and hide the buttons
+    setTimeout(function () {
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].classList.add('remove');
+            buttons[i].classList.remove('fade-out');
+        }
+    }, 500);
+}
+
+// Show all Buttons
+function showAllButtons() {
+    let buttons = document.getElementsByClassName('btn');
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.add('fade-in');
+    }
+
+    // Wait 1 second and hide the buttons
+    setTimeout(function () {
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove('fade-in');
+        }
+    }, 500);
 }
 
 // Reset Default Buttons
@@ -67,6 +89,7 @@ function resetButtons() {
     solveButton.classList.remove('remove');
     resetButton.classList.remove('remove');
     solutionButton.classList.add('remove');
+    showAllButtons();
 }
 
 // Toggle Complete Puzzle Button
