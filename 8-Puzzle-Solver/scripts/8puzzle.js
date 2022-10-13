@@ -55,8 +55,37 @@ function getCurrentGrid() {
     return newGrid;
 }
 
+function getCurrentGridInt() {
+    var gridElements = document
+        .getElementById('grid')
+        .getElementsByTagName('div');
+
+    var gridArray = Array.from(gridElements);
+    var newGrid = [];
+
+    for (var i = 0; i < gridArray.length; i++) {
+        newGrid.push(parseInt(gridArray[i].innerHTML));
+    }
+
+    return newGrid;
+}
+
 function solveGrid() {
-    // TODO: Implement this function
+    let goalGrid = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+    // let grid = getCurrentGridInt();
+    // let grid = [0, 1, 2, 4, 5, 3, 6, 7, 8]; // Medium Puzzle
+    let grid = [ 4, 0, 1, 5, 3, 2, 6, 7, 8]; // Harder Puzzle
+    // let grid = [5, 4, 1, 0, 2, 8, 3, 6, 7]; // Should Be Solving The Puzzle
+    let start = new Date();
+
+    aStarSearch(grid, goalGrid).then((solution) => {
+        let end = new Date();
+        let time = end - start;
+        console.log("Time: ", time);
+        // Update time in HTML
+        document.getElementById('time').innerHTML = "Time: " + time + " ms";
+        printSolution(solution);
+    });
 }
 
 function isSolved() {
