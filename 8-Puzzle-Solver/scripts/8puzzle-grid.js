@@ -53,6 +53,16 @@ function findMovedElement(grid1, grid2) {
     return movedElement;
 }
 
+function startPuzzle() {
+    initializePuzzle();
+    addTileEventListeners();
+}
+
+function completePuzzle() {
+    puzzleCompleted();
+    disableEvents();
+}
+
 /* ------------------ Draw Grid Function ------------------ */
 // Draw the grid on the screen with the given array
 function drawGrid(defaultGrid) {
@@ -144,7 +154,7 @@ function solveGrid() {
             console.log("Time: ", time);
 
             // Call complete puzzle function
-            if (isSolved()) { completePuzzle }
+            if (isSolved()) { completePuzzle() }
 
             // Update time in HTML
             document.getElementById('time').innerHTML = "Time: " + time + " ms";
@@ -161,16 +171,6 @@ function showSolution() {
     hideAllButtons();
     printSolution(global_solution);
     showAllButtons();
-}
-
-function startPuzzle() {
-    initializePuzzle();
-    addTileEventListeners();
-}
-
-function completePuzzle() {
-    puzzleCompleted();
-    disableEvents();
 }
 
 /* ------------------ StartUp Call ------------------ */
