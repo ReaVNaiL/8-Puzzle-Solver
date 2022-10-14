@@ -128,7 +128,7 @@ function displayAdjacentElements(time) {
     }, time);
 }
 
-function highlightMovedTile(grid1, grid2) {
+async function highlightMovedTile(grid1, grid2) {
     // Get the tile that was moved
     let movedTile = findMovedElement(grid1, grid2);
 
@@ -136,7 +136,7 @@ function highlightMovedTile(grid1, grid2) {
     let tile = document.getElementById(`${movedTile}`);
     tile.classList.add('adjacent');
 
-    // wait 650 ms and remove the classes
+    // wait 300 ms and remove the classes
     setTimeout(function () {
         tile.classList.remove('adjacent');
     }, 300);
@@ -151,15 +151,16 @@ async function displaySolution(solutionArr, index) {
     if (index > 0) previousGrid = convertToStringArray(solutionArr[index - 1]);
 
     // Highlighting the tiles that are different
-    if (index > 0) highlightMovedTile(currentGrid, previousGrid);
+    if (index > 0) await highlightMovedTile(currentGrid, previousGrid);
         await new Promise((resolve) => setTimeout(resolve, 100));
 
     // Drawing the grid
     drawGrid(currentGrid);
 
-    if (index > 0) highlightMovedTile(currentGrid, previousGrid);
+    if (index > 0) await highlightMovedTile(currentGrid, previousGrid);
     if (index < solutionArr.length - 1)
-        await new Promise((resolve) => setTimeout(resolve, 600));
+        await new Promise((resolve) => setTimeout(resolve, 150));
+    await new Promise((resolve) => setTimeout(resolve, 300));
 }
 
 function updateStatsBox(stats) {

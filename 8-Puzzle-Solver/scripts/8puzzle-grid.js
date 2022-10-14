@@ -1,4 +1,8 @@
 /* ------------------ Helper Functions ------------------ */
+// Storing the solution in a global variable
+let global_solution = [];
+
+// Shuffle the grid array
 function shuffleGridArray(array) {
     var currentIndex = array.length,
         temporaryValue,
@@ -27,6 +31,15 @@ function convertToStringArray(intArray) {
     return stringArray;
 }
 
+// Convert String Array To Int Array
+function convertToIntArray(stringArray) {
+    let intArray = [];
+    for (let i = 0; i < stringArray.length; i++) {
+        intArray.push(parseInt(stringArray[i]));
+    }
+    return intArray;
+}
+
 // Finds the element that was moved between two grids
 function findMovedElement(grid1, grid2) {
     let movedElement = 0;
@@ -40,8 +53,8 @@ function findMovedElement(grid1, grid2) {
     return movedElement;
 }
 
-
 /* ------------------ Draw Grid Function ------------------ */
+// Draw the grid on the screen with the given array
 function drawGrid(defaultGrid) {
     for (var i = 0; i < defaultGrid.length; i++) {
         var tile = document.getElementById(defaultGrid[i]);
@@ -50,26 +63,7 @@ function drawGrid(defaultGrid) {
     }
 }
 
-function resetGrid() {
-    var standardGrid = [5, 4, 1, 0, 2, 8, 3, 6, 7];
-    initializePuzzle();
-    addTileEventListeners();
-    drawGrid(standardGrid);
-}
-
-function shuffleGrid() {
-    clearStatsBox();
-    resetGrid();
-
-    let newGrid = shuffleGridArray(getCurrentGrid());
-    
-    while(!isSolutionPossible(newGrid)) {
-        shuffleGridArray(newGrid);
-    }
-
-    drawGrid(newGrid);
-}
-
+/* ------------------ Helper Grid Functions ------------------ */
 function getCurrentGrid() {
     var gridElements = document
         .getElementById('grid')
@@ -85,19 +79,44 @@ function getCurrentGrid() {
     return newGrid;
 }
 
+// Grid Int Variation Int
 function getCurrentGridInt() {
-    var gridElements = document
-        .getElementById('grid')
-        .getElementsByTagName('div');
+    let gridArray = getCurrentGrid();
+    let intArray = convertToIntArray(gridArray);
+    return intArray;
+}
 
-    var gridArray = Array.from(gridElements);
-    var newGrid = [];
+function isSolved() {
+    var gridArray = getCurrentGrid();
+    var solvedGrid = ['1', '2', '3', '4', '5', '6', '7', '8', '0'];
 
     for (var i = 0; i < gridArray.length; i++) {
-        newGrid.push(parseInt(gridArray[i].innerHTML));
+        if (gridArray[i] != solvedGrid[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+/* ------------------ Button Event Functions ------------------ */
+function resetGrid() {
+    var standardGrid = [5, 4, 1, 0, 2, 8, 3, 6, 7];
+    startPuzzle();
+    drawGrid(standardGrid);
+}
+
+function shuffleGrid() {
+    clearStatsBox();
+    resetGrid();
+
+    let newGrid = shuffleGridArray(getCurrentGrid());
+    
+    while(!isSolutionPossible(newGrid)) {
+        shuffleGridArray(newGrid);
     }
 
-    return newGrid;
+    drawGrid(newGrid);
 }
 
 function solveGrid() {
@@ -124,41 +143,35 @@ function solveGrid() {
             let time = end - start;
             console.log("Time: ", time);
 
-            if (isSolved()) {
-                puzzleCompleted();
-                disableEvents();
-            }
+            // Call complete puzzle function
+            if (isSolved()) { completePuzzle }
 
             // Update time in HTML
             document.getElementById('time').innerHTML = "Time: " + time + " ms";
             
-            /* --- Bug with event listener added twice --- */
-            // Wait for click event on solution button
-            document.getElementById('solution').addEventListener('click', () => {
-                // Animate solution
-                initializePuzzle();
-                hideAllButtons();
-                printSolution(solution);
-                showAllButtons();
-            });
+            global_solution = solution;
         });
     } else {
         alert("This puzzle cannot be solved!");
     }
 }
 
-function isSolved() {
-    var gridArray = getCurrentGrid();
-    var solvedGrid = ['1', '2', '3', '4', '5', '6', '7', '8', '0'];
+function showSolution() {
+    initializePuzzle();
+    hideAllButtons();
+    printSolution(global_solution);
+    showAllButtons();
+}
 
-    for (var i = 0; i < gridArray.length; i++) {
-        if (gridArray[i] != solvedGrid[i]) {
-            return false;
-        }
-    }
-    return true;
+function startPuzzle() {
+    initializePuzzle();
+    addTileEventListeners();
+}
+
+function completePuzzle() {
+    puzzleCompleted();
+    disableEvents();
 }
 
 /* ------------------ StartUp Call ------------------ */
-initializePuzzle();
-addTileEventListeners();
+startPuzzle();
