@@ -52,7 +52,8 @@
     text-shadow:
         1px 1px 10px #4f4f51, 2px 2px 3px #4f4f51, 3px 3px 3px #4f4f51;
     transform: translateX(-5px);
-    font-size: 4em;
+    font-size: 4.5em;
+    margin-top: 2%;
 }
 
 .background-completed {

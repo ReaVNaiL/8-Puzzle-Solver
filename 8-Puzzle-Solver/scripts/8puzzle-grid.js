@@ -169,7 +169,7 @@ function solveGrid() {
 function showSolution() {
     initializePuzzle();
     hideAllButtons();
-    printSolution(global_solution);
+    if (global_solution.length > 0) printSolution(global_solution);
     showAllButtons();
 }
 

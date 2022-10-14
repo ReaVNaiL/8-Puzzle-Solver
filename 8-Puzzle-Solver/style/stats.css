@@ -1,8 +1,9 @@
 .stats-box {
-    background-color: #1f283372;
+    opacity: 70%;
+    background-color: #1f28332b;
     color: #fee2e9;
     border-radius: 10px;
-    box-shadow: 0 0 5px #c5c6c7;
+    box-shadow: 4px 4px #1f283328, 5px 5px 5px #1f283348, 6px 6px 6px#1f28331e;
     margin-top: 1%;
     padding: 1%;
     width: 70%;
