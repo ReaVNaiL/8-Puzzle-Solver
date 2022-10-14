@@ -4,7 +4,6 @@
 // let grid = [ 4, 0, 1, 5, 3, 2, 6, 7, 8]; // Harder Puzzle
 // let grid = [5, 4, 1, 0, 2, 8, 3, 6, 7]; // Should Be Solving The Puzzle
 // let grid = [4, 1, 0, 5, 3, 2, 6, 7, 8];
-let goalGrid = [1, 2, 3, 4, 5, 6, 7, 8, 0];
 
 // A* Search Algorithm
 async function aStarSearch(grid, goalGrid) {
@@ -34,13 +33,15 @@ async function aStarSearch(grid, goalGrid) {
         }
         openList.splice(currentIndex, 1);
         closedList.push(currentNode);
-        if (currentNode.grid.toString() === goalGrid.toString()) {
+        if (isSolved(currentNode.grid)) {
             let path = [];
             let current = currentNode;
             while (current != null) {
                 path.push(current.grid);
                 current = current.parent;
             }
+            let stats = ["States Explored:  " + numberOfNodes, "Optimal Moves:  " + deepestDepth, "Maximum Cost:  " + bestCost];
+            updateStatsBox(stats);
             console.log("Solution Found! \nNumber of Moves:", deepestDepth, "\nNumber of Nodes:", numberOfNodes, "\nMax Cost:", bestCost);
             return path.reverse();
         }

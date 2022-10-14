@@ -10,8 +10,8 @@ body {
     font-weight: 700;
     color: #e4faf8;
     text-align: center;
-    margin-top: 3em;
     text-shadow: #093b3f 0px 0px 6px;
+    height: 5%;
 }
 
 .grid {

@@ -7,12 +7,15 @@
         <link rel="icon" href="favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="style/general.css"/>
         <link rel="stylesheet" type="text/css" href="style/states.css"/>
+        <link rel="stylesheet" type="text/css" href="style/stats.css"/>
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     </head>
     <body>
-        <!-- Time Element -->
-        <div id="time">
-            <p id="time-text">Time: 0</p>
+        <div class="container hidden ease" id="container-box">
+            <div class="stats-box">
+                <p class="stats-text">Solution Found!</p>
+                <p class="stats-text" id="time"> Time: 0</p>
+            </div>
         </div>
         <h1 class="title ease">8-Puzzle Solver</h1>
         <div class="grid ease" id="grid">

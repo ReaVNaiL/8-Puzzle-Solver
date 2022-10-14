@@ -1,0 +1,28 @@
+.stats-box {
+    background-color: #1f283372;
+    color: #fee2e9;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #c5c6c7;
+    margin-top: 1%;
+    padding: 1%;
+    width: 70%;
+    height: 16%;
+    max-width: 300px;
+    max-height: 125px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stats-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}

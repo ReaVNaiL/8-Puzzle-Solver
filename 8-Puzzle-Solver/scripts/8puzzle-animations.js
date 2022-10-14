@@ -37,6 +37,8 @@ function initializePuzzle() {
 
 // Hide Reset/Solve Buttons
 function hideButtons() {
+    document.getElementById("container-box").classList.remove("hidden");
+    
     let solveButton = document.getElementById('solve');
     let resetButton = document.getElementById('reset');
     let shuffleButton = document.getElementById('shuffle');
@@ -81,9 +83,10 @@ function showAllButtons() {
 
 // Reset Default Buttons
 function resetButtons() {
+    document.getElementById("container-box").classList.add('hidden');
+
     let solveButton = document.getElementById('solve');
     let resetButton = document.getElementById('reset');
-    let shuffleButton = document.getElementById('shuffle');
     let solutionButton = document.getElementById('solution');
 
     solveButton.classList.remove('remove');
@@ -157,4 +160,26 @@ async function displaySolution(solutionArr, index) {
     if (index > 0) highlightMovedTile(currentGrid, previousGrid);
     if (index < solutionArr.length - 1)
         await new Promise((resolve) => setTimeout(resolve, 600));
+}
+
+function updateStatsBox(stats) {
+    // Update the stats box
+    let boxElements = document.getElementsByClassName('stats-box');
+
+    // Create a new element for each stat
+    for (let i = 0; i < stats.length; i++) {
+        let element = document.createElement('p');
+        element.textContent = stats[i];
+        element.classList.add('stats-text');
+        boxElements[0].appendChild(element);
+    }
+}
+
+function clearStatsBox() {
+    let boxElements = document.getElementsByClassName('stats-box');
+    
+    // Remove all elements from the stats box except the first 2
+    while (boxElements[0].children.length > 2) {
+        boxElements[0].removeChild(boxElements[0].lastChild);
+    }
 }

@@ -58,6 +58,7 @@ function resetGrid() {
 }
 
 function shuffleGrid() {
+    clearStatsBox();
     resetGrid();
 
     let newGrid = shuffleGridArray(getCurrentGrid());
@@ -143,10 +144,6 @@ function solveGrid() {
     } else {
         alert("This puzzle cannot be solved!");
     }
-}
-
-function showSolution() {
-    
 }
 
 function isSolved() {
