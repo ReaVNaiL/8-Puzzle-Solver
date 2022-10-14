@@ -132,6 +132,7 @@ function solveGrid() {
             // Update time in HTML
             document.getElementById('time').innerHTML = "Time: " + time + " ms";
             
+            /* --- Bug with event listener added twice --- */
             // Wait for click event on solution button
             document.getElementById('solution').addEventListener('click', () => {
                 // Animate solution
