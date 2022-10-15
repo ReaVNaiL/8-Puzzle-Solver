@@ -79,9 +79,7 @@ function isSolutionPossible(gridArray) {
         }
     }
 
-    if (inversions % 2 == 0) {
-        return true;
-    }
+    if (inversions % 2 == 0) { return true;}
 
     return false;
 }

@@ -19,19 +19,23 @@ async function aStarSearch(grid) {
     let maxCost = (exploredStates = moves = 0);
 
     while (openList.length > 0) {
+
         // Only await 1ms to allow the UI to update every 20 iterations
         if (openList.length % 10 === 0) {
             await new Promise((resolve) => setTimeout(resolve, 1));
             displayAdjacentElements(1);
         }
+
         let currentNode = openList[0];
         let currentIndex = 0;
+
         for (let i = 0; i < openList.length; i++) {
             if (openList[i].total < currentNode.total) {
                 currentNode = openList[i];
                 currentIndex = i;
             }
         }
+
         openList.splice(currentIndex, 1);
         closedList.push(currentNode);
 
@@ -48,6 +52,7 @@ async function aStarSearch(grid) {
             console.log(stats);
             return path.reverse();
         }
+
         let leaves = [];
         let possibleMoves = await getPossibleMoves(currentNode.state);
 
@@ -73,16 +78,11 @@ async function aStarSearch(grid) {
                 }
 
                 console.log(
-                    'State: ',
-                    child.state,
-                    '\nTotal Cost: ',
-                    child.total,
-                    'Depth: ',
-                    child.depth,
-                    'Distance: ',
-                    child.cost,
-                    'Deepest Leaf: ',
-                    moves,
+                    'State: ', child.state,
+                    '\nTotal Cost: ', child.total,
+                    'Depth: ', child.depth,
+                    'Distance: ', child.cost,
+                    'Deepest Leaf: ', moves,
                 );
 
                 /*=== UI and Stats Updates ===*/
