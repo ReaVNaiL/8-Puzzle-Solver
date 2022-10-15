@@ -1,19 +1,8 @@
-// Node Class
-class Node {
-    constructor(grid, g, h, parent) {
-        this.grid = grid;
-        this.g = g;
-        this.h = h;
-        this.f = g + h;
-        this.parent = parent;
-    }
-}
-
 class Leaf {
     constructor(state, depth, parent) {
         this.state = state;
         this.depth = depth;
-        this.cost = heuristicCost(state);
+        this.cost = heuristicCost(this.state);
         this.total = this.depth + this.cost;
         this.parent = parent;
     }
@@ -23,101 +12,98 @@ class Leaf {
 async function aStarSearch(grid) {
     let openList = [];
     let closedList = [];
-    let startNode = new Node(grid, 0, 0, null);
+    let startNode = new Leaf(grid, 0, null);
     openList.push(startNode);
 
-    // Helper
-    let maxCost = exploredStates = moves = 0;
+    // Stats Helper
+    let maxCost = (exploredStates = moves = 0);
 
     while (openList.length > 0) {
         // Only await 1ms to allow the UI to update every 20 iterations
         if (openList.length % 10 === 0) {
-            await new Promise(resolve => setTimeout(resolve, 1));
+            await new Promise((resolve) => setTimeout(resolve, 1));
             displayAdjacentElements(1);
         }
         let currentNode = openList[0];
         let currentIndex = 0;
         for (let i = 0; i < openList.length; i++) {
-            if (openList[i].f < currentNode.f) {
+            if (openList[i].total < currentNode.total) {
                 currentNode = openList[i];
                 currentIndex = i;
             }
         }
         openList.splice(currentIndex, 1);
         closedList.push(currentNode);
-        
-        if (isSolved(currentNode.grid)) {
-            drawGrid(currentNode.grid);
+
+        if (isSolved(currentNode.state)) {
+            drawGrid(currentNode.state);
             let path = [];
             let current = currentNode;
             while (current != null) {
-                path.push(current.grid);
+                path.push(current.state);
                 current = current.parent;
             }
-            let stats = ["States Explored:  " + exploredStates, "Optimal Moves:  " + moves, "Maximum Cost:  " + maxCost];
+            let stats = ['States Explored:  ' + exploredStates, 'Optimal Moves:  ' + moves, 'Maximum Cost:  ' + maxCost];
             updateStatsBox(stats);
             console.log(stats);
             return path.reverse();
         }
-        let children = [];
-        let possibleMoves = await getPossibleMoves(currentNode.grid);
-        // Wait for 1 second
+        let leaves = [];
+        let possibleMoves = await getPossibleMoves(currentNode.state);
+
         for (let i = 0; i < possibleMoves.length; i++) {
-            let newGrid = await swap(
-                currentNode.grid,
-                possibleMoves[i][0],
-                possibleMoves[i][1]
-            );
-            let newNode = new Node(newGrid, currentNode.g + 1, 0, currentNode);
-            children.push(newNode);
+            let newGrid = await swap(currentNode.state, possibleMoves[i][0], possibleMoves[i][1]);
+            let newNode = new Leaf(newGrid, currentNode.depth + 1, currentNode);
+            leaves.push(newNode);
             exploredStates++;
         }
 
-        if (children.length > 0) {
-            for (let i = 0; i < children.length; i++) {
-                let child = children[i];
-                let inClosedList = false;
+        if (leaves.length > 0) {
+            for (let i = 0; i < leaves.length; i++) {
+                let child = leaves[i];
+                let inClosed = false;
                 for (let j = 0; j < closedList.length; j++) {
-                    if (child.grid.toString() === closedList[j].grid.toString()) {
-                        inClosedList = true;
+                    if (child.state.toString() === closedList[j].state.toString()) {
+                        inClosed = true;
                         break;
                     }
                 }
-                if (inClosedList) {
+                if (inClosed) {
                     continue;
                 }
 
-                child.h = await heuristicCost(child.grid);
-                // child.h = await heuristic(child.grid, goalGrid);
-                child.f = child.g + child.h;
-                console.log("State: ", child.grid, "\nTotal Cost: ", child.f, "Depth: ", child.g, "Distance: ", child.h, "Deepest Leaf: ", moves);
+                console.log(
+                    'State: ',
+                    child.state,
+                    '\nTotal Cost: ',
+                    child.total,
+                    'Depth: ',
+                    child.depth,
+                    'Distance: ',
+                    child.cost,
+                    'Deepest Leaf: ',
+                    moves,
+                );
 
-                /* This is addons. */
-                let newSol = convertToStringArray(child.grid);
-                drawGrid(newSol);
-                
-                if (child.g > moves) {
-                    moves = child.g;
-                }
+                /*=== UI and Stats Updates ===*/
+                drawGrid(convertToStringArray(child.state));
+                if (child.depth > moves) moves = child.depth;
+                if (child.total > maxCost) maxCost = child.total;
 
-                if (child.f > maxCost) {
-                    maxCost = child.f;
-                }
-
-                let inOpenList = false;
+                let inOpen = false;
                 for (let j = 0; j < openList.length; j++) {
-                    if (child.grid.toString() === openList[j].grid.toString()) {
-                        inOpenList = true;
+                    if (child.state.toString() === openList[j].state.toString()) {
+                        inOpen = true;
                         break;
                     }
                 }
-                if (!inOpenList) {
+                if (!inOpen) {
                     openList.push(child);
                 }
             }
         }
     }
-    return "No solution found";
+    return 'No solution found';
 }
 
 // Get Possible Moves Async
@@ -139,7 +125,6 @@ async function getPossibleMoves(grid) {
     return possibleMoves;
 }
 
-
 // Swap Function Async
 async function swap(grid, index1, index2) {
     let newGrid = grid.slice();
@@ -151,14 +136,14 @@ async function swap(grid, index1, index2) {
 
 // Print Grid
 function printGrid(grid) {
-    let gridString = "";
+    let gridString = '';
     for (let i = 0; i < grid.length; i++) {
         if (i % 3 === 0) {
-            gridString += "[ ";
+            gridString += '[ ';
         }
-        gridString += grid[i] + " ";
+        gridString += grid[i] + ' ';
         if (i % 3 === 2) {
-            gridString += "]\n";
+            gridString += ']\n';
         }
     }
     return gridString;
@@ -166,10 +151,10 @@ function printGrid(grid) {
 
 // Print Solution
 async function printSolution(solution) {
-    console.log("Solution: \n");
+    console.log('Solution: \n');
     drawGrid(solution[0]);
     for (let i = 0; i < solution.length; i++) {
-        console.log("Step ", i, ": \n" + printGrid(solution[i]));
+        console.log('Step ', i, ': \n' + printGrid(solution[i]));
 
         await displaySolution(solution, i);
     }

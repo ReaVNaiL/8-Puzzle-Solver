@@ -52,7 +52,7 @@ function distanceFromGoal(currTileIndex, goalIndex) {
 }
 
 // Calculate Heuristic Asynchronously
-async function heuristicCost(state) {
+function heuristicCost(state) {
     let solutionGrid = [1, 2, 3, 4, 5, 6, 7, 8, 0];
     let cost = 0;
 
