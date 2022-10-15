@@ -1,21 +1,33 @@
-// 8 Puzzle Solver
-// let grid = 541028367;
-// let grid = [0, 1, 2, 4, 5, 3, 6, 7, 8]; // Medium Puzzle
-// let grid = [ 4, 0, 1, 5, 3, 2, 6, 7, 8]; // Harder Puzzle
-// let grid = [5, 4, 1, 0, 2, 8, 3, 6, 7]; // Should Be Solving The Puzzle
-// let grid = [4, 1, 0, 5, 3, 2, 6, 7, 8];
+// Node Class
+class Node {
+    constructor(grid, g, h, parent) {
+        this.grid = grid;
+        this.g = g;
+        this.h = h;
+        this.f = g + h;
+        this.parent = parent;
+    }
+}
+
+class Leaf {
+    constructor(state, depth, parent) {
+        this.state = state;
+        this.depth = depth;
+        this.cost = heuristicCost(state);
+        this.total = this.depth + this.cost;
+        this.parent = parent;
+    }
+}
 
 // A* Search Algorithm
-async function aStarSearch(grid, goalGrid) {
+async function aStarSearch(grid) {
     let openList = [];
     let closedList = [];
     let startNode = new Node(grid, 0, 0, null);
     openList.push(startNode);
 
     // Helper
-    let bestCost = 0;
-    let numberOfNodes = 0;
-    let deepestDepth = 0;
+    let maxCost = exploredStates = moves = 0;
 
     while (openList.length > 0) {
         // Only await 1ms to allow the UI to update every 20 iterations
@@ -33,14 +45,16 @@ async function aStarSearch(grid, goalGrid) {
         }
         openList.splice(currentIndex, 1);
         closedList.push(currentNode);
+        
         if (isSolved(currentNode.grid)) {
+            drawGrid(currentNode.grid);
             let path = [];
             let current = currentNode;
             while (current != null) {
                 path.push(current.grid);
                 current = current.parent;
             }
-            let stats = ["States Explored:  " + numberOfNodes, "Optimal Moves:  " + deepestDepth, "Maximum Cost:  " + bestCost];
+            let stats = ["States Explored:  " + exploredStates, "Optimal Moves:  " + moves, "Maximum Cost:  " + maxCost];
             updateStatsBox(stats);
             console.log(stats);
             return path.reverse();
@@ -56,7 +70,7 @@ async function aStarSearch(grid, goalGrid) {
             );
             let newNode = new Node(newGrid, currentNode.g + 1, 0, currentNode);
             children.push(newNode);
-            numberOfNodes++;
+            exploredStates++;
         }
 
         if (children.length > 0) {
@@ -72,20 +86,22 @@ async function aStarSearch(grid, goalGrid) {
                 if (inClosedList) {
                     continue;
                 }
-                child.h = await heuristic(child.grid, goalGrid);
+
+                child.h = await heuristicCost(child.grid);
+                // child.h = await heuristic(child.grid, goalGrid);
                 child.f = child.g + child.h;
-                console.log("State: ", child.grid, "\nTotal Cost: ", child.f, "Depth: ", child.g, "Distance: ", child.h, "Deepest Leaf: ", deepestDepth);
+                console.log("State: ", child.grid, "\nTotal Cost: ", child.f, "Depth: ", child.g, "Distance: ", child.h, "Deepest Leaf: ", moves);
 
                 /* This is addons. */
                 let newSol = convertToStringArray(child.grid);
                 drawGrid(newSol);
                 
-                if (child.g > deepestDepth) {
-                    deepestDepth = child.g;
+                if (child.g > moves) {
+                    moves = child.g;
                 }
 
-                if (child.f > bestCost) {
-                    bestCost = child.f;
+                if (child.f > maxCost) {
+                    maxCost = child.f;
                 }
 
                 let inOpenList = false;
@@ -102,40 +118,6 @@ async function aStarSearch(grid, goalGrid) {
         }
     }
     return "No solution found";
-}
-
-// Node Class
-class Node {
-    constructor(grid, g, h, parent) {
-        this.grid = grid;
-        this.g = g;
-        this.h = h;
-        this.f = g + h;
-        this.parent = parent;
-    }
-}
-
-// Heuristic Function
-function distanceFromGoal(currTileIndex, goalIndex) {
-    // Get the rows. The grid is 3x3, so the rows are 0, 1, 2
-    let rows = [Math.floor(currTileIndex / 3), Math.floor(goalIndex / 3)]
-
-    // Get the columns.
-    let columns = [currTileIndex % 3, goalIndex % 3];
-
-    // Calculate the distance x2 - x1 + y2 - y1
-    return Math.abs(rows[0] - rows[1]) + Math.abs(columns[0] - columns[1]);
-}
-
-// Calculate Heuristic Asynchronously
-async function heuristic(grid, goalGrid) {
-    let heuristic = 0;
-    for (let i = 0; i < grid.length; i++) {
-        let currTile = grid[i];
-        let goalIndex = goalGrid.indexOf(currTile);
-        heuristic += distanceFromGoal(i, goalIndex);
-    }
-    return heuristic;
 }
 
 // Get Possible Moves Async

@@ -6,7 +6,7 @@ Notes for A* algorithm:
    Where:   
         F = Total cost of the node 
         G = The depth of the tree from the start node to the current node
-        H = Heuristic cost of the node to the goal node (estimated cost) or (Manhattan distance), which is the sum of the distances of the tiles from their goal positions. 
+        H = Heuristic cost of the node to the goal node (estimated cost), which is the sum of the distances of the tiles from their goal positions. 
         i.e: [1, 2, 3, 4, 5, 6, 7, 8, 0] is the goal state, so the heuristic cost of the node [1, 2, 3, 4, 5, 6, 7, 0, 8] is 1, because the tile 8 is 1 step away from its goal position.
 
 3- It needs a heuristic function. It can be anyting, but it must be admissible, meaning that it never overestimates the actual cost to get to the goal.
@@ -30,15 +30,16 @@ Notes for A* algorithm:
    ? //    7 8 0
     
 */  
-// The grid is represented as a 1D array
-// grid = [5, 4, 1, 0, 2, 8, 3, 6, 7];
+
 
 // Rules:
 // 1- The grid is represented as a 1D array
+//      grid = [5, 4, 1, 0, 2, 8, 3, 6, 7];
 // 2- You can move the empty tile (0) to any adjacent tile
 // 3- The adjacent tiles are the tiles that are horizontally or vertically adjacent to the empty tile
 // 4- The empty tile can't be moved diagonally
 
+// Heuristic Function
 function distanceFromGoal(currTileIndex, goalIndex) {
     // Get the rows. The grid is 3x3, so the rows are 0, 1, 2
     let rows = [Math.floor(currTileIndex / 3), Math.floor(goalIndex / 3)]
@@ -50,7 +51,8 @@ function distanceFromGoal(currTileIndex, goalIndex) {
     return Math.abs(rows[0] - rows[1]) + Math.abs(columns[0] - columns[1]);
 }
 
-function heuristicCost(state) {
+// Calculate Heuristic Asynchronously
+async function heuristicCost(state) {
     let solutionGrid = [1, 2, 3, 4, 5, 6, 7, 8, 0];
     let cost = 0;
 
@@ -61,6 +63,26 @@ function heuristicCost(state) {
             cost += distance;
         }
     }
-    console.log("State", state, "Cost: ", cost);
+    // console.log("State", state, "Cost: ", cost);
     return cost;
 }
+
+// Detect Number of Inversions
+function isSolutionPossible(gridArray) {
+    var inversions = 0;
+
+    for (let i = 0; i < gridArray.length; i++) {
+        for (let j = i + 1; j < gridArray.length; j++) {
+            if (gridArray[i] != '0' && gridArray[j] != '0' && gridArray[i] > gridArray[j]) {
+                inversions++;
+            }
+        }
+    }
+
+    if (inversions % 2 == 0) {
+        return true;
+    }
+
+    return false;
+}
+

@@ -1,13 +1,3 @@
-class Leaf {
-    constructor(state, depth) {
-        this.state = state;
-        this.depth = depth;
-        this.cost = heuristicCost(state);
-        this.total = this.depth + this.cost;
-        this.leaves = [];
-    }
-}
-
 class DecisionTree {
     constructor(state) {
         this.root = new Leaf(state, 0);
@@ -118,51 +108,6 @@ function getAdjacentElements(gridArray) {
 
     return adjacentElements;
 }
-
-function isSolutionPossible(gridArray) {
-    var inversions = 0;
-
-    for (let i = 0; i < gridArray.length; i++) {
-        for (let j = i + 1; j < gridArray.length; j++) {
-            if (gridArray[i] != '0' && gridArray[j] != '0' && gridArray[i] > gridArray[j]) {
-                inversions++;
-            }
-        }
-    }
-
-    if (inversions % 2 == 0) {
-        return true;
-    }
-
-    return false;
-}
-
-function aStarSearch(gridArray) {
-    const tree = new DecisionTree(gridArray);
-
-    let openList = [gridArray];
-    let closedList = [];
-
-    while (openList.length > 0) {
-        const state = tree.getNextState();
-
-        if (isSolved(state)) {
-            return state;
-        }
-
-        openList = openList.filter(item => item !== state);
-        closedList.push(state);
-
-        const possibleStates = tree.getPossibleStates(state);
-
-        for (let i = 0; i < possibleStates.length; i++) {
-            if (!closedList.includes(possibleStates[i])) {
-                openList.push(possibleStates[i]);
-            }
-        }
-    }
-}
-
 goalState = ['1', '2', '3', '4', '5', '6', '7', '8', '0'];
 
 // (function main() {
