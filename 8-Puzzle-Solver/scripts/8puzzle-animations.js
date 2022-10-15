@@ -63,7 +63,7 @@ function hideAllButtons() {
             buttons[i].classList.add('remove');
             buttons[i].classList.remove('fade-out');
         }
-    }, 500);
+    }, 100);
 }
 
 // Show all Buttons

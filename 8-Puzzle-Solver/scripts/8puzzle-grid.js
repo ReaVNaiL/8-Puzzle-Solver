@@ -146,31 +146,44 @@ function solveGrid() {
     if (canBeSolved) {
         disableEvents();
         hideAllButtons();
-        let start = new Date();
-
-        aStarSearch(grid, goalGrid).then((solution) => {
-            let end = new Date();
-            let time = end - start;
-            console.log("Time: ", time);
-
-            // Call complete puzzle function
-            if (isSolved()) { completePuzzle() }
-
-            // Update time in HTML
-            document.getElementById('time').innerHTML = "Time: " + time + " ms";
-            
-            global_solution = solution;
-        });
+        
+        setTimeout(() => {
+            let start = new Date();
+            aStarSearch(grid, goalGrid).then((solution) => {
+                let end = new Date();
+                let time = end - start;
+                console.log("Time: ", time);
+                // Call complete puzzle function
+                if (isSolved()) { 
+                    completePuzzle()
+                    let solutionBtn = document.getElementById('solution');
+                    solutionBtn.innerHTML = 'Show Solution';
+                    solutionBtn.disabled = false; 
+                }
+    
+                // Update time in HTML
+                document.getElementById('time').innerHTML = "Time: " + time + " ms";
+                
+                global_solution = solution;
+            });
+        }, 100);
     } else {
         alert("This puzzle cannot be solved!");
     }
 }
 
 function showSolution() {
-    initializePuzzle();
-    hideAllButtons();
-    if (global_solution.length > 0) printSolution(global_solution);
-    showAllButtons();
+    let solutionBtn = document.getElementById('solution');
+
+    if (global_solution.length > 0) {
+        initializePuzzle();
+        hideAllButtons();
+        printSolution(global_solution);
+        showAllButtons();
+    } else {
+        solutionBtn.innerHTML = 'Not Available';
+        solutionBtn.disabled = true;
+    }
 }
 
 /* ------------------ StartUp Call ------------------ */

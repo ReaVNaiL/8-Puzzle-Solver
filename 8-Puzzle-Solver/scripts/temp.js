@@ -42,7 +42,7 @@ async function aStarSearch(grid, goalGrid) {
             }
             let stats = ["States Explored:  " + numberOfNodes, "Optimal Moves:  " + deepestDepth, "Maximum Cost:  " + bestCost];
             updateStatsBox(stats);
-            console.log("Solution Found! \nNumber of Moves:", deepestDepth, "\nNumber of Nodes:", numberOfNodes, "\nMax Cost:", bestCost);
+            console.log(stats);
             return path.reverse();
         }
         let children = [];
@@ -78,7 +78,6 @@ async function aStarSearch(grid, goalGrid) {
 
                 /* This is addons. */
                 let newSol = convertToStringArray(child.grid);
-                // // wait for 1 second
                 drawGrid(newSol);
                 
                 if (child.g > deepestDepth) {

@@ -37,6 +37,10 @@
     background-image: linear-gradient(to right,  #2c2b30 0%, #3a3436 100%);
 }
 
+.completed:disabled {background-image: linear-gradient(to bottom, #7d3030 0%, #923150 100%);
+    color: #ffd8d9;
+}
+
 .completed > .grid-item {
     font-size: 4em;
     background-color: #4f4f51;
