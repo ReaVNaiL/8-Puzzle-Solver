@@ -72,6 +72,7 @@ function heuristicCost(state) {
 // Detect Number of Inversions
 function isSolutionPossible(gridArray) {
     var inversions = 0;
+
     for (let i = 0; i < gridArray.length; i++) {
         for (let j = i + 1; j < gridArray.length; j++) {
             if (gridArray[i] != '0' && gridArray[j] != '0' && gridArray[i] > gridArray[j]) {
@@ -79,96 +80,10 @@ function isSolutionPossible(gridArray) {
             }
         }
     }
+
     // If the number of inversions is even, the solution is possible
     if (inversions % 2 == 0) { return true; }
     return false;
-}
-
-// Generate Possible States:
-function generateStateLeaves(currentState) {
-    const _LEAF = currentState
-    leaves = [];
-
-    let possibleMoves = getPossibleMoves(_LEAF.state);
-
-    for (let i = 0; i < possibleMoves.length; i++) {
-        let newGrid = swap(_LEAF.state, possibleMoves[i][0], possibleMoves[i][1]);
-        let newNode = new Leaf(newGrid, _LEAF.depth + 1, _LEAF);
-        leaves.push(newNode);
-        exploredStates++;
-    }
-    
-    return leaves;
-}
-
-function getAdjacentElements1(gridArray) {
-    var adjacentElements = [];
-    var emptyTileIndex = gridArray.indexOf(0);
-
-    // Top element
-    if (emptyTileIndex - 3 >= 0) adjacentElements.push(gridArray[emptyTileIndex - 3]);
-    // Bottom element
-    if (emptyTileIndex + 3 <= 8) adjacentElements.push(gridArray[emptyTileIndex + 3]);
-    // Left element
-    if (emptyTileIndex - 1 >= 0 && emptyTileIndex % 3 != 0) adjacentElements.push(gridArray[emptyTileIndex - 1]);
-    // Right element
-    if (emptyTileIndex + 1 <= 8 && emptyTileIndex % 3 != 2) adjacentElements.push(gridArray[emptyTileIndex + 1]);
-
-    return adjacentElements;
-}
-
-function getPossibleNewStates(leaf) {
-    const possibleStates = [];
-    const state = leaf.state;
-
-    const emptyTileIndex = state.indexOf(0);
-    const adjacentElements = getAdjacentElements1(state);
-
-    for (let i = 0; i < adjacentElements.length; i++) {
-        const adjacentElementIndex = state.indexOf(adjacentElements[i]);
-        const newState = state.slice();
-        
-        newState[emptyTileIndex] = adjacentElements[i];
-        newState[adjacentElementIndex] = 0;
-
-        possibleStates.push(new Leaf(newState, leaf.depth + 1, leaf));
-        exploredStates++;
-    }
-
-    return possibleStates;
-}
-
-function exploreLeaves(leaves, toExplore, explored, maxCost, moves) {
-    for (let leaf of leaves) {
-        let isExplored = false;
-
-        explored.forEach((exploredLeaf) => {
-            if (leaf.state.toString() === exploredLeaf.state.toString()) {
-                isExplored = true;
-            }
-        });
-
-        if (isExplored) continue;
-
-        logCurrentLeaf(leaf);
-
-        // /*=== UI and Stats Updates ===*/
-        drawGrid(convertToStringArray(leaf.state));
-        if (leaf.depth > moves) moves = leaf.depth;
-        if (leaf.total_cost > maxCost) maxCost = leaf.total_cost;
-
-        let notExplored = true;
-
-        toExplore.forEach((toExploreLeaf) => {
-            if (leaf.state.toString() === toExploreLeaf.state.toString()) {
-                notExplored = false;
-            }
-        });
-
-        if (notExplored) {
-            toExplore.push(leaf);
-        }
-    }
 }
 
 function logCurrentLeaf(leaf) {
@@ -179,9 +94,39 @@ function logCurrentLeaf(leaf) {
 function reverseSolutionPath(solutionPath) {
     let reversedPath = [];
     let current = solutionPath;
+
     while (current != null) {
         reversedPath.push(current.state);
         current = current.parent;
     }
+
     return reversedPath.reverse();
+}
+
+// Print Grid
+function printGrid(grid) {
+    let gridString = '';
+    for (let i = 0; i < grid.length; i++) {
+        if (i % 3 === 0) {
+            gridString += '[ ';
+        }
+        gridString += grid[i] + ' ';
+        if (i % 3 === 2) {
+            gridString += ']\n';
+        }
+    }
+    return gridString;
+}
+
+// Print Solution
+async function printSolution(solution) {
+    console.log('Solution: \n');
+    drawGrid(solution[0]);
+    for (let i = 0; i < solution.length; i++) {
+        console.log('Step ', i, ': \n' + printGrid(solution[i]));
+
+        await displaySolution(solution, i);
+    }
+    puzzleCompleted();
+    disableEvents();
 }

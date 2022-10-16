@@ -1,17 +1,16 @@
-function getAdjacentElements(gridArray) {
+function getAdjacentElementsHtml(gridArray) {
     var adjacentElements = [];
-
     var emptyTileIndex = gridArray.indexOf('0');
 
     // Top element
     if (emptyTileIndex - 3 >= 0) adjacentElements.push(gridArray[emptyTileIndex - 3]);
-    
+
     // Bottom element
     if (emptyTileIndex + 3 <= 8) adjacentElements.push(gridArray[emptyTileIndex + 3]);
-    
+
     // Left element
     if (emptyTileIndex - 1 >= 0 && emptyTileIndex % 3 != 0) adjacentElements.push(gridArray[emptyTileIndex - 1]);
-    
+
     // Right element
     if (emptyTileIndex + 1 <= 8 && emptyTileIndex % 3 != 2) adjacentElements.push(gridArray[emptyTileIndex + 1]);
 
@@ -20,12 +19,12 @@ function getAdjacentElements(gridArray) {
 
 function isAdjacent(tileId) {
     gridArray = getCurrentGrid();
-    var adjacentElements = getAdjacentElements(gridArray);
+    var adjacentElements = getAdjacentElementsHtml(gridArray);
 
     if (adjacentElements.includes(tileId)) {
         return true;
     }
-    
+
     return false;
 }
 
@@ -35,30 +34,34 @@ function shiftTile() {
 
     if (adjacent) {
         var gridArray = getCurrentGrid();
-        console.log(gridArray);
+        // console.log(gridArray);
 
         var emptyTileIndex = gridArray.indexOf('0');
         var tileIndex = gridArray.indexOf(`${tileId}`);
 
-        console.log(`Empty Tile Index: ${emptyTileIndex}`);
-        console.log(`Tile Index: ${tileIndex}`);
+        // console.log(`Empty Tile Index: ${emptyTileIndex}`);
+        // console.log(`Tile Index: ${tileIndex}`);
 
         gridArray[emptyTileIndex] = gridArray[tileIndex];
         gridArray[tileIndex] = '0';
 
-        console.log(gridArray);
+        // console.log(gridArray);
 
         drawGrid(gridArray);
 
+        // Update move count
+        manual_moves++;
+
         if (isSolved()) {
+            updateStatsBox([`Total Moves: ${manual_moves}`]);
             puzzleCompleted();
             disableEvents();
         }
 
-        return `Tile ${tileId} shifted`;
+        return console.log(`Tile ${tileId} shifted`);
     }
 
-    return `Could not shift tile ${tileId}`;
+    return console.log(`Could not shift tile ${tileId}`);
 }
 
 // add event listeners to all tiles on click

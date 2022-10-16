@@ -1,3 +1,13 @@
+class Leaf {
+    constructor(state, depth, parent) {
+        this.state = state;
+        this.depth = depth;
+        this.cost = heuristicCost(this.state);
+        this.total_cost = this.depth + this.cost;
+        this.parent = parent;
+    }
+}
+
 class DecisionTree {
     constructor(state) {
         this.root = new Leaf(state, 0, null);
@@ -7,7 +17,7 @@ class DecisionTree {
             this.root
         ];
         this.maxCost = 0;
-        this.exploredStates = 0;
+        this.createdLeaves = 0;
         this.moves = 0;
     }
 
@@ -20,14 +30,6 @@ class DecisionTree {
         this.maxCost = null;
         this.exploredStates = null;
         this.moves = null;
-    }
-
-    expandLeaf(leaf) {
-        const possibleStates = this.getPossibleStates(leaf.state);
-
-        for (let i = 0; i < possibleStates.length; i++) {
-            this.addLeaf(possibleStates[i], leaf.depth + 1);
-        }
     }
 
     findBestLeaf() {
@@ -78,14 +80,10 @@ class DecisionTree {
             newState[adjacentElementIndex] = 0;
 
             possibleStates.push(new Leaf(newState, leaf.depth + 1, leaf));
-            this.exploredStates++;
+            this.createdLeaves++;
         }
 
         return possibleStates;
-    }
-
-    getDepth() {
-        return this.depth;
     }
 
     aStarSearch() {
@@ -99,7 +97,7 @@ class DecisionTree {
                 drawGrid(currentLeaf.state);
 
                 /*==== UI Stats Box Visualization ===*/
-                let stats = [`States Explored: ${this.exploredStates}`, `Optimal Moves: ${this.moves}`, `Maximum Cost: ${this.maxCost}`];
+                let stats = [`States Explored: ${this.explored.length}`, `Leaves Created: ${this.createdLeaves}`, `Optimal Moves: ${this.moves}`, `Maximum Cost: ${this.maxCost}`];
                 updateStatsBox(stats);
                 return solution;
             }
@@ -113,29 +111,44 @@ class DecisionTree {
                         isExplored = true;
                     }
                 });
-    
                 if (isExplored) continue;
     
-                // logCurrentLeaf(leaf);
-    
                 let notExplored = true;
-    
                 this.toExplore.forEach((toExploreLeaf) => {
                     if (leaf.state.toString() === toExploreLeaf.state.toString()) {
                         notExplored = false;
                     }
                 });
-    
                 if (notExplored) this.toExplore.push(leaf);
+                
+                // logCurrentLeaf(leaf);
 
                 if (leaf.depth > this.moves) this.moves = leaf.depth;
                 if (leaf.total_cost > this.maxCost) this.maxCost = leaf.total_cost;
             }
+        }
+    }
 
+    printTree() {
+        // Print the explored states based on the depth
+        let exploredLen = this.explored.length;
+        let depth = 0;
+
+        // Sort the explored states based on the depth
+        this.explored.sort((a, b) => {
+            return a.depth - b.depth;
+        });
+
+        console.log(`---------------------- Root ----------------------`);
+        for (let leaf of this.explored) {
+            // Draw a line between the states of the different depth
+            if (leaf.depth > depth) {
+                console.log(`--------------------- Level ${depth+1} ---------------------`);
+                depth++;
+            }
+            console.log(leaf.state);
         }
     }
 }
 
-
-goalState = ['1', '2', '3', '4', '5', '6', '7', '8', '0'];
 

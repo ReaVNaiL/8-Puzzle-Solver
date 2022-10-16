@@ -1,6 +1,8 @@
 /* ------------------ Helper Functions ------------------ */
 // Storing the solution in a global variable
-let global_solution = [];
+let global_ai_solution = [];
+let manual_moves = 0;
+
 
 // Shuffle the grid array
 function shuffleGridArray(array) {
@@ -111,6 +113,7 @@ function isSolved(checkGrid) {
 
 /* ------------------ Button Event Functions ------------------ */
 function resetGrid() {
+    manual_moves = 0;
     var standardGrid = [5, 4, 1, 0, 2, 8, 3, 6, 7];
     startPuzzle();
     drawGrid(standardGrid);
@@ -132,9 +135,7 @@ function shuffleGrid() {
 function solveGrid() {
     initializePuzzle();
 
-    let goalGrid = [1, 2, 3, 4, 5, 6, 7, 8, 0];
     let grid = getCurrentGridInt();
-    
     /* Test Cases */
     // let grid = [ 1, 2, 3, 4, 0, 6, 7, 5, 8 ] // Easy Puzzle
     // let grid = [0, 1, 2, 4, 5, 3, 6, 7, 8]; // Medium Puzzle
@@ -144,6 +145,7 @@ function solveGrid() {
     let isPossible = isSolutionPossible(grid);
 
     if (isPossible) {
+
         disableEvents();
         hideAllButtons();
         
@@ -151,11 +153,10 @@ function solveGrid() {
             let tree = new DecisionTree(grid);
             let start = new Date();
 
-            global_solution = tree.aStarSearch();
+            global_ai_solution = tree.aStarSearch();
 
-            let time = new Date() - start;
-            console.log("Time:", time, "ms.");
-            document.getElementById('time').innerHTML = "Time: " + time + " ms";
+            let statsTime = [`Time: ${new Date() - start} ms`];
+            addElementToStatsBox(statsTime, false);
             
             if (isSolved()) { 
                 completePuzzle()
@@ -172,10 +173,10 @@ function solveGrid() {
 function showSolution() {
     let solutionBtn = document.getElementById('solution');
 
-    if (global_solution.length > 0) {
+    if (global_ai_solution.length > 0) {
         initializePuzzle();
         hideAllButtons();
-        printSolution(global_solution);
+        printSolution(global_ai_solution);
         showAllButtons();
     } else {
         solutionBtn.innerHTML = 'Not Available';
