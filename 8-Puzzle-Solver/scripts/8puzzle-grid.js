@@ -160,8 +160,6 @@ async function solveGrid() {
             solutionBtn.innerHTML = 'Show Solution';
             solutionBtn.disabled = false; 
         }
-
-        global_ai_solution = solution;
     } else {
         alert("This puzzle cannot be solved!");
     }
