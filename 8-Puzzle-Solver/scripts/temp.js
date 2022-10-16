@@ -22,10 +22,10 @@ async function aStarSearch(grid) {
     while (toExplore.length > 0) {
 
         /*==== UI Visualization ===*/
-        // if (toExplore.length % 20 == 0) {
-            // await new Promise((resolve) => setTimeout(resolve, 1));
-            // displayAdjacentElements(1);
-        // }
+        if (toExplore.length % 20 == 0) {
+            await new Promise((resolve) => setTimeout(resolve, 1));
+            displayAdjacentElements(1);
+        }
 
         let currentLeaf = toExplore[0];
         let leafIndex = 0;
@@ -63,7 +63,7 @@ async function aStarSearch(grid) {
 
             if (isExplored) continue;
 
-            // logCurrentLeaf(leaf);
+            logCurrentLeaf(leaf);
 
             let notExplored = true;
 
@@ -76,9 +76,9 @@ async function aStarSearch(grid) {
             if (notExplored) toExplore.push(leaf);
 
             /*=== UI and Stats Updates ===*/
-            // drawGrid(convertToStringArray(leaf.state));
-            // if (leaf.depth > moves) moves = leaf.depth;
-            // if (leaf.total_cost > maxCost) maxCost = leaf.total_cost;
+            drawGrid(convertToStringArray(leaf.state));
+            if (leaf.depth > moves) moves = leaf.depth;
+            if (leaf.total_cost > maxCost) maxCost = leaf.total_cost;
         }
     }
     return 'No solution found';
