@@ -141,9 +141,9 @@ function solveGrid() {
     // let grid = [ 4, 0, 1, 5, 3, 2, 6, 7, 8]; // Harder Puzzle
     // let grid = [5, 4, 1, 0, 2, 8, 3, 6, 7]; // Should Be Solving The Puzzle
     
-    let canBeSolved = isSolutionPossible(grid);
+    let isPossible = isSolutionPossible(grid);
 
-    if (canBeSolved) {
+    if (isPossible) {
         disableEvents();
         hideAllButtons();
         

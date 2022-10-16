@@ -22,11 +22,12 @@ async function aStarSearch(grid) {
     while (toExplore.length > 0) {
 
         /*==== UI Visualization ===*/
-        if (toExplore.length % 20 == 0) {
-            await new Promise((resolve) => setTimeout(resolve, 1));
-            displayAdjacentElements(1);
-        }
+        // if (toExplore.length % 10 == 0) {
+        //     await new Promise((resolve) => setTimeout(resolve, 1));
+        //     displayAdjacentElements(1);
+        // }
 
+        // # Step: 1 Find the leaf with the lowest total cost and remove it from the toExplore list
         let currentLeaf = toExplore[0];
         let leafIndex = 0;
 
@@ -39,6 +40,8 @@ async function aStarSearch(grid) {
 
         toExplore.splice(leafIndex, 1);
         explored.push(currentLeaf);
+        // # Step: 1 Find the leaf with the lowest total cost and remove it from the toExplore list
+
 
         if (isSolved(currentLeaf.state)) {
             // Reverse the solution found
@@ -51,7 +54,8 @@ async function aStarSearch(grid) {
             return solution;
         }
 
-        let leaves = await generateStateLeaves(currentLeaf);
+        // let leaves = generateStateLeaves(currentLeaf);
+        let leaves = getPossibleNewStates(currentLeaf);
 
         for (let leaf of leaves) {
             let isExplored = false;
@@ -63,7 +67,7 @@ async function aStarSearch(grid) {
 
             if (isExplored) continue;
 
-            logCurrentLeaf(leaf);
+            // logCurrentLeaf(leaf);
 
             let notExplored = true;
 
@@ -76,7 +80,7 @@ async function aStarSearch(grid) {
             if (notExplored) toExplore.push(leaf);
 
             /*=== UI and Stats Updates ===*/
-            drawGrid(convertToStringArray(leaf.state));
+            // drawGrid(convertToStringArray(leaf.state));
             if (leaf.depth > moves) moves = leaf.depth;
             if (leaf.total_cost > maxCost) maxCost = leaf.total_cost;
         }
@@ -86,7 +90,7 @@ async function aStarSearch(grid) {
 
 
 // Swap Function Async
-async function swap(grid, index1, index2) {
+function swap(grid, index1, index2) {
     let newGrid = grid.slice();
     let temp = newGrid[index1];
     newGrid[index1] = newGrid[index2];
@@ -95,7 +99,7 @@ async function swap(grid, index1, index2) {
 }
 
 // Get Possible Moves Async
-async function getPossibleMoves(grid) {
+function getPossibleMoves(grid) {
     let possibleMoves = [];
     let zeroIndex = grid.indexOf(0);
     if (zeroIndex % 3 != 0) {

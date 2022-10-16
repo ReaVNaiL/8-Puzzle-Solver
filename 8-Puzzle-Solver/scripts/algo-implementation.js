@@ -58,12 +58,13 @@ function heuristicCost(state) {
     let cost = 0;
 
     for (let i = 0; i < state.length; i++) {
-        let tile = parseInt(state[i]);
+        let tile = state[i];
         if (state[i] != 0) {
             let distance = distanceFromGoal(i, solutionGrid.indexOf(tile));
             cost += distance;
         }
     }
+    
     // console.log("State", state, "Cost: ", cost);
     return cost;
 }
@@ -78,25 +79,63 @@ function isSolutionPossible(gridArray) {
             }
         }
     }
+    // If the number of inversions is even, the solution is possible
     if (inversions % 2 == 0) { return true; }
     return false;
 }
 
 // Generate Possible States:
-async function generateStateLeaves(currentState) {
+function generateStateLeaves(currentState) {
     const _LEAF = currentState
     leaves = [];
 
-    let possibleMoves = await getPossibleMoves(_LEAF.state);
+    let possibleMoves = getPossibleMoves(_LEAF.state);
 
     for (let i = 0; i < possibleMoves.length; i++) {
-        let newGrid = await swap(_LEAF.state, possibleMoves[i][0], possibleMoves[i][1]);
+        let newGrid = swap(_LEAF.state, possibleMoves[i][0], possibleMoves[i][1]);
         let newNode = new Leaf(newGrid, _LEAF.depth + 1, _LEAF);
         leaves.push(newNode);
         exploredStates++;
     }
     
     return leaves;
+}
+
+function getAdjacentElements1(gridArray) {
+    var adjacentElements = [];
+    var emptyTileIndex = gridArray.indexOf(0);
+
+    // Top element
+    if (emptyTileIndex - 3 >= 0) adjacentElements.push(gridArray[emptyTileIndex - 3]);
+    // Bottom element
+    if (emptyTileIndex + 3 <= 8) adjacentElements.push(gridArray[emptyTileIndex + 3]);
+    // Left element
+    if (emptyTileIndex - 1 >= 0 && emptyTileIndex % 3 != 0) adjacentElements.push(gridArray[emptyTileIndex - 1]);
+    // Right element
+    if (emptyTileIndex + 1 <= 8 && emptyTileIndex % 3 != 2) adjacentElements.push(gridArray[emptyTileIndex + 1]);
+
+    return adjacentElements;
+}
+
+function getPossibleNewStates(leaf) {
+    const possibleStates = [];
+    const state = leaf.state;
+
+    const emptyTileIndex = state.indexOf(0);
+    const adjacentElements = getAdjacentElements1(state);
+
+    for (let i = 0; i < adjacentElements.length; i++) {
+        const adjacentElementIndex = state.indexOf(adjacentElements[i]);
+        const newState = state.slice();
+        
+        newState[emptyTileIndex] = adjacentElements[i];
+        newState[adjacentElementIndex] = 0;
+
+        possibleStates.push(new Leaf(newState, leaf.depth + 1, leaf));
+        exploredStates++;
+    }
+
+    return possibleStates;
 }
 
 function exploreLeaves(leaves, toExplore, explored, maxCost, moves) {
