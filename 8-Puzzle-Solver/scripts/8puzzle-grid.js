@@ -148,24 +148,21 @@ function solveGrid() {
         hideAllButtons();
         
         setTimeout(() => {
+            let tree = new DecisionTree(grid);
             let start = new Date();
-            aStarSearch(grid, goalGrid).then((solution) => {
-                let end = new Date();
-                let time = end - start;
-                console.log("Time: ", time);
-                // Call complete puzzle function
-                if (isSolved()) { 
-                    completePuzzle()
-                    let solutionBtn = document.getElementById('solution');
-                    solutionBtn.innerHTML = 'Show Solution';
-                    solutionBtn.disabled = false; 
-                }
-    
-                // Update time in HTML
-                document.getElementById('time').innerHTML = "Time: " + time + " ms";
-                
-                global_solution = solution;
-            });
+
+            global_solution = tree.aStarSearch();
+
+            let time = new Date() - start;
+            console.log("Time:", time, "ms.");
+            document.getElementById('time').innerHTML = "Time: " + time + " ms";
+            
+            if (isSolved()) { 
+                completePuzzle()
+                let solutionBtn = document.getElementById('solution');
+                solutionBtn.innerHTML = 'Show Solution';
+                solutionBtn.disabled = false; 
+            }
         }, 100);
     } else {
         alert("This puzzle cannot be solved!");
