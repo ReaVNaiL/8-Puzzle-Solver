@@ -1,3 +1,4 @@
+/* ------------------ Puzzle Event Animations ------------------ */
 // Complete Puzzle Animation
 function puzzleCompleted() {
     hideButtons();

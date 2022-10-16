@@ -1,3 +1,4 @@
+/* ------------------ Html Tiles Functions ------------------ */
 function getAdjacentElementsHtml(gridArray) {
     var adjacentElements = [];
     var emptyTileIndex = gridArray.indexOf('0');

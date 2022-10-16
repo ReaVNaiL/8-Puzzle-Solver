@@ -1,3 +1,4 @@
+/* ------------------ Leaf Nodes Class ------------------ */
 class Leaf {
     constructor(state, depth, parent) {
         this.state = state;
@@ -8,6 +9,7 @@ class Leaf {
     }
 }
 
+/* ------------------ Decision Tree For A* ------------------ */
 class DecisionTree {
     constructor(state) {
         this.root = new Leaf(state, 0, null);
@@ -30,6 +32,7 @@ class DecisionTree {
         this.moves = null;
     }
 
+    // Find the leaf with the lowest cost and remove it from the toExplore array
     async findBestLeaf() {
         let currentLeaf = this.toExplore[0];
         let leafIndex = 0;
@@ -47,6 +50,7 @@ class DecisionTree {
         return currentLeaf;
     }
 
+    // Get the adjacent elements of the empty tile
     getAdjacentElements(gridArray) {
         var adjacentElements = [];
         var emptyTileIndex = gridArray.indexOf(0);
@@ -63,7 +67,8 @@ class DecisionTree {
         return adjacentElements;
     }
 
-    generateCurrentDepthStates(leaf) {
+    // Generate the states of the next depth
+    generateNextDepthStates(leaf) {
         const possibleStates = [];
         const state = leaf.state;
 
@@ -84,9 +89,11 @@ class DecisionTree {
         return possibleStates;
     }
 
+    // A* Algorithm
     async aStarSearch(animate) {
         let timeRunning = new Date();
         let timeStart = new Date();
+
         while (this.toExplore.length > 0) {
             let currentLeaf = await this.findBestLeaf();
 
@@ -117,9 +124,9 @@ class DecisionTree {
                 return solution;
             }
 
-            let leaves = this.generateCurrentDepthStates(currentLeaf);
-            // drawGrid(currentLeaf.state);
+            let leaves = this.generateNextDepthStates(currentLeaf);
 
+            // Add the new leaves to the toExplore array
             for (let leaf of leaves) {
                 let isExplored = false;
                 this.explored.forEach((exploredLeaf) => {
@@ -145,8 +152,8 @@ class DecisionTree {
         }
     }
 
+    // Print the explored states based on the depth
     printTree() {
-        // Print the explored states based on the depth
         let depth = 0;
 
         // Sort the explored states based on the depth
