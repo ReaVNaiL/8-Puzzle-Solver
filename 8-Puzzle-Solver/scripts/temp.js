@@ -3,107 +3,95 @@ class Leaf {
         this.state = state;
         this.depth = depth;
         this.cost = heuristicCost(this.state);
-        this.total = this.depth + this.cost;
+        this.total_cost = this.depth + this.cost;
         this.parent = parent;
     }
 }
 
 // A* Search Algorithm
 async function aStarSearch(grid) {
-    let openList = [];
-    let closedList = [];
-    let startNode = new Leaf(grid, 0, null);
-    openList.push(startNode);
+    let toExplore = [];
+    let explored = [];
+
+    let root = new Leaf(grid, 0, null);
+    toExplore.push(root);
 
     // Stats Helper
     let maxCost = (exploredStates = moves = 0);
 
-    while (openList.length > 0) {
+    while (toExplore.length > 0) {
 
-        // Only await 1ms to allow the UI to update every 20 iterations
-        if (openList.length % 10 === 0) {
-            await new Promise((resolve) => setTimeout(resolve, 1));
-            displayAdjacentElements(1);
-        }
+        /*==== UI Visualization ===*/
+        // if (toExplore.length % 20 == 0) {
+            // await new Promise((resolve) => setTimeout(resolve, 1));
+            // displayAdjacentElements(1);
+        // }
 
-        let currentNode = openList[0];
-        let currentIndex = 0;
+        let currentLeaf = toExplore[0];
+        let leafIndex = 0;
 
-        for (let i = 0; i < openList.length; i++) {
-            if (openList[i].total < currentNode.total) {
-                currentNode = openList[i];
-                currentIndex = i;
+        for (let i = 0; i < toExplore.length; i++) {
+            if (toExplore[i].total_cost < currentLeaf.total_cost) {
+                currentLeaf = toExplore[i];
+                leafIndex = i;
             }
         }
 
-        openList.splice(currentIndex, 1);
-        closedList.push(currentNode);
+        toExplore.splice(leafIndex, 1);
+        explored.push(currentLeaf);
 
-        if (isSolved(currentNode.state)) {
-            drawGrid(currentNode.state);
-            let path = [];
-            let current = currentNode;
-            while (current != null) {
-                path.push(current.state);
-                current = current.parent;
-            }
-            let stats = ['States Explored:  ' + exploredStates, 'Optimal Moves:  ' + moves, 'Maximum Cost:  ' + maxCost];
+        if (isSolved(currentLeaf.state)) {
+            // Reverse the solution found
+            let solution = reverseSolutionPath(currentLeaf);
+            drawGrid(currentLeaf.state);
+
+            /*==== UI Stats Box Visualization ===*/
+            let stats = [`States Explored: ${exploredStates}`, `Optimal Moves: ${moves}`, `Maximum Cost: ${maxCost}`];
             updateStatsBox(stats);
-            console.log(stats);
-            return path.reverse();
+            return solution;
         }
 
-        let leaves = [];
-        let possibleMoves = await getPossibleMoves(currentNode.state);
+        let leaves = await generateStateLeaves(currentLeaf);
 
-        for (let i = 0; i < possibleMoves.length; i++) {
-            let newGrid = await swap(currentNode.state, possibleMoves[i][0], possibleMoves[i][1]);
-            let newNode = new Leaf(newGrid, currentNode.depth + 1, currentNode);
-            leaves.push(newNode);
-            exploredStates++;
-        }
-
-        if (leaves.length > 0) {
-            for (let i = 0; i < leaves.length; i++) {
-                let child = leaves[i];
-                let inClosed = false;
-                for (let j = 0; j < closedList.length; j++) {
-                    if (child.state.toString() === closedList[j].state.toString()) {
-                        inClosed = true;
-                        break;
-                    }
+        for (let leaf of leaves) {
+            let isExplored = false;
+            explored.forEach((exploredLeaf) => {
+                if (leaf.state.toString() === exploredLeaf.state.toString()) {
+                    isExplored = true;
                 }
-                if (inClosed) {
-                    continue;
-                }
+            });
 
-                console.log(
-                    'State: ', child.state,
-                    '\nTotal Cost: ', child.total,
-                    'Depth: ', child.depth,
-                    'Distance: ', child.cost,
-                    'Deepest Leaf: ', moves,
-                );
+            if (isExplored) continue;
 
-                /*=== UI and Stats Updates ===*/
-                drawGrid(convertToStringArray(child.state));
-                if (child.depth > moves) moves = child.depth;
-                if (child.total > maxCost) maxCost = child.total;
+            // logCurrentLeaf(leaf);
 
-                let inOpen = false;
-                for (let j = 0; j < openList.length; j++) {
-                    if (child.state.toString() === openList[j].state.toString()) {
-                        inOpen = true;
-                        break;
-                    }
+            let notExplored = true;
+
+            toExplore.forEach((toExploreLeaf) => {
+                if (leaf.state.toString() === toExploreLeaf.state.toString()) {
+                    notExplored = false;
                 }
-                if (!inOpen) {
-                    openList.push(child);
-                }
-            }
+            });
+
+            if (notExplored) toExplore.push(leaf);
+
+            /*=== UI and Stats Updates ===*/
+            // drawGrid(convertToStringArray(leaf.state));
+            // if (leaf.depth > moves) moves = leaf.depth;
+            // if (leaf.total_cost > maxCost) maxCost = leaf.total_cost;
         }
     }
     return 'No solution found';
+}
+
+
+// Swap Function Async
+async function swap(grid, index1, index2) {
+    let newGrid = grid.slice();
+    let temp = newGrid[index1];
+    newGrid[index1] = newGrid[index2];
+    newGrid[index2] = temp;
+    return newGrid;
 }
 
 // Get Possible Moves Async
@@ -123,15 +111,6 @@ async function getPossibleMoves(grid) {
         possibleMoves.push([zeroIndex, zeroIndex + 3]);
     }
     return possibleMoves;
-}
-
-// Swap Function Async
-async function swap(grid, index1, index2) {
-    let newGrid = grid.slice();
-    let temp = newGrid[index1];
-    newGrid[index1] = newGrid[index2];
-    newGrid[index2] = temp;
-    return newGrid;
 }
 
 // Print Grid

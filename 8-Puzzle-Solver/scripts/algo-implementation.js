@@ -39,6 +39,7 @@ Notes for A* algorithm:
 // 3- The adjacent tiles are the tiles that are horizontally or vertically adjacent to the empty tile
 // 4- The empty tile can't be moved diagonally
 
+/* ------------------ Algorithm Helper Functions ------------------ */
 // Heuristic Function
 function distanceFromGoal(currTileIndex, goalIndex) {
     // Get the rows. The grid is 3x3, so the rows are 0, 1, 2
@@ -70,7 +71,6 @@ function heuristicCost(state) {
 // Detect Number of Inversions
 function isSolutionPossible(gridArray) {
     var inversions = 0;
-
     for (let i = 0; i < gridArray.length; i++) {
         for (let j = i + 1; j < gridArray.length; j++) {
             if (gridArray[i] != '0' && gridArray[j] != '0' && gridArray[i] > gridArray[j]) {
@@ -78,9 +78,71 @@ function isSolutionPossible(gridArray) {
             }
         }
     }
-
-    if (inversions % 2 == 0) { return true;}
-
+    if (inversions % 2 == 0) { return true; }
     return false;
 }
 
+// Generate Possible States:
+async function generateStateLeaves(currentState) {
+    const _LEAF = currentState
+    leaves = [];
+
+    let possibleMoves = await getPossibleMoves(_LEAF.state);
+
+    for (let i = 0; i < possibleMoves.length; i++) {
+        let newGrid = await swap(_LEAF.state, possibleMoves[i][0], possibleMoves[i][1]);
+        let newNode = new Leaf(newGrid, _LEAF.depth + 1, _LEAF);
+        leaves.push(newNode);
+        exploredStates++;
+    }
+    
+    return leaves;
+}
+
+function exploreLeaves(leaves, toExplore, explored, maxCost, moves) {
+    for (let leaf of leaves) {
+        let isExplored = false;
+
+        explored.forEach((exploredLeaf) => {
+            if (leaf.state.toString() === exploredLeaf.state.toString()) {
+                isExplored = true;
+            }
+        });
+
+        if (isExplored) continue;
+
+        logCurrentLeaf(leaf);
+
+        // /*=== UI and Stats Updates ===*/
+        drawGrid(convertToStringArray(leaf.state));
+        if (leaf.depth > moves) moves = leaf.depth;
+        if (leaf.total_cost > maxCost) maxCost = leaf.total_cost;
+
+        let notExplored = true;
+
+        toExplore.forEach((toExploreLeaf) => {
+            if (leaf.state.toString() === toExploreLeaf.state.toString()) {
+                notExplored = false;
+            }
+        });
+
+        if (notExplored) {
+            toExplore.push(leaf);
+        }
+    }
+}
+
+function logCurrentLeaf(leaf) {
+    console.log("Leaf: ", leaf.state, "\nDepth: ", leaf.depth, "Cost: ", leaf.cost);
+}
+
+// Reverse Solution Path
+function reverseSolutionPath(solutionPath) {
+    let reversedPath = [];
+    let current = solutionPath;
+    while (current != null) {
+        reversedPath.push(current.state);
+        current = current.parent;
+    }
+    return reversedPath.reverse();
+}

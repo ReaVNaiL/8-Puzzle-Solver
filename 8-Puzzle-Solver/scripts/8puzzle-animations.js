@@ -164,6 +164,7 @@ async function displaySolution(solutionArr, index) {
 }
 
 function updateStatsBox(stats) {
+    console.log(stats);
     // Update the stats box
     let boxElements = document.getElementsByClassName('stats-box');
 
