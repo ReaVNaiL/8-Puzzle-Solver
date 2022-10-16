@@ -13,9 +13,7 @@ class DecisionTree {
         this.root = new Leaf(state, 0, null);
         this.depth = 0;
         this.explored = [];
-        this.toExplore = [
-            this.root
-        ];
+        this.toExplore = [this.root];
         this.maxCost = 0;
         this.createdLeaves = 0;
         this.moves = 0;
@@ -32,7 +30,7 @@ class DecisionTree {
         this.moves = null;
     }
 
-    findBestLeaf() {
+    async findBestLeaf() {
         let currentLeaf = this.toExplore[0];
         let leafIndex = 0;
 
@@ -52,7 +50,7 @@ class DecisionTree {
     getAdjacentElements(gridArray) {
         var adjacentElements = [];
         var emptyTileIndex = gridArray.indexOf(0);
-    
+
         // Top element
         if (emptyTileIndex - 3 >= 0) adjacentElements.push(gridArray[emptyTileIndex - 3]);
         // Bottom element
@@ -61,11 +59,11 @@ class DecisionTree {
         if (emptyTileIndex - 1 >= 0 && emptyTileIndex % 3 != 0) adjacentElements.push(gridArray[emptyTileIndex - 1]);
         // Right element
         if (emptyTileIndex + 1 <= 8 && emptyTileIndex % 3 != 2) adjacentElements.push(gridArray[emptyTileIndex + 1]);
-    
+
         return adjacentElements;
     }
 
-    getPossibleNewStates(leaf) {
+    generateCurrentDepthStates(leaf) {
         const possibleStates = [];
         const state = leaf.state;
 
@@ -75,7 +73,7 @@ class DecisionTree {
         for (let i = 0; i < adjacentElements.length; i++) {
             const adjacentElementIndex = state.indexOf(adjacentElements[i]);
             const newState = state.slice();
-            
+
             newState[emptyTileIndex] = adjacentElements[i];
             newState[adjacentElementIndex] = 0;
 
@@ -86,10 +84,21 @@ class DecisionTree {
         return possibleStates;
     }
 
-    aStarSearch() {
+    async aStarSearch(animate) {
+        let timeRunning = new Date();
+        let timeStart = new Date();
         while (this.toExplore.length > 0) {
-            let currentLeaf = this.findBestLeaf();
-            
+            let currentLeaf = await this.findBestLeaf();
+
+            /*==== UI Visualization ===*/
+            // every 50 ms of time passed, update the UI 
+            if (animate && new Date() - timeRunning > 25) {
+                // Update the UI
+                drawGrid(currentLeaf.state);
+                await displayAdjacentElements(1);
+                timeRunning = new Date();
+            }
+
             // Check if the current leaf is the goal state
             if (isSolved(currentLeaf.state)) {
                 // Reverse the solution found
@@ -97,12 +106,19 @@ class DecisionTree {
                 drawGrid(currentLeaf.state);
 
                 /*==== UI Stats Box Visualization ===*/
-                let stats = [`States Explored: ${this.explored.length}`, `Leaves Created: ${this.createdLeaves}`, `Optimal Moves: ${this.moves}`, `Maximum Cost: ${this.maxCost}`];
+                let stats = [
+                    `Time: ${new Date() - timeStart} ms`,
+                    `States Explored: ${this.explored.length}`,
+                    `Leaves Created: ${this.createdLeaves}`,
+                    `Optimal Moves: ${this.moves}`,
+                    `Maximum Cost: ${this.maxCost}`,
+                ];
                 updateStatsBox(stats);
                 return solution;
             }
 
-            let leaves = this.getPossibleNewStates(currentLeaf);
+            let leaves = this.generateCurrentDepthStates(currentLeaf);
+            // drawGrid(currentLeaf.state);
 
             for (let leaf of leaves) {
                 let isExplored = false;
@@ -112,7 +128,7 @@ class DecisionTree {
                     }
                 });
                 if (isExplored) continue;
-    
+
                 let notExplored = true;
                 this.toExplore.forEach((toExploreLeaf) => {
                     if (leaf.state.toString() === toExploreLeaf.state.toString()) {
@@ -120,8 +136,8 @@ class DecisionTree {
                     }
                 });
                 if (notExplored) this.toExplore.push(leaf);
-                
-                // logCurrentLeaf(leaf);
+
+                logCurrentLeaf(leaf);
 
                 if (leaf.depth > this.moves) this.moves = leaf.depth;
                 if (leaf.total_cost > this.maxCost) this.maxCost = leaf.total_cost;
@@ -131,7 +147,6 @@ class DecisionTree {
 
     printTree() {
         // Print the explored states based on the depth
-        let exploredLen = this.explored.length;
         let depth = 0;
 
         // Sort the explored states based on the depth
@@ -143,12 +158,10 @@ class DecisionTree {
         for (let leaf of this.explored) {
             // Draw a line between the states of the different depth
             if (leaf.depth > depth) {
-                console.log(`--------------------- Level ${depth+1} ---------------------`);
+                console.log(`--------------------- Level ${depth + 1} ---------------------`);
                 depth++;
             }
             console.log(leaf.state);
         }
     }
 }
-
-

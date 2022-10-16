@@ -132,7 +132,7 @@ function shuffleGrid() {
     drawGrid(newGrid);
 }
 
-function solveGrid() {
+async function solveGrid() {
     initializePuzzle();
 
     let grid = getCurrentGridInt();
@@ -149,22 +149,19 @@ function solveGrid() {
         disableEvents();
         hideAllButtons();
         
-        setTimeout(() => {
-            let tree = new DecisionTree(grid);
-            let start = new Date();
+        await new Promise(r => setTimeout(r, 100));
+        let tree = new DecisionTree(grid);
 
-            global_ai_solution = tree.aStarSearch();
+        global_ai_solution = await tree.aStarSearch(true);
+        
+        if (isSolved()) { 
+            completePuzzle()
+            let solutionBtn = document.getElementById('solution');
+            solutionBtn.innerHTML = 'Show Solution';
+            solutionBtn.disabled = false; 
+        }
 
-            let statsTime = [`Time: ${new Date() - start} ms`];
-            addElementToStatsBox(statsTime, false);
-            
-            if (isSolved()) { 
-                completePuzzle()
-                let solutionBtn = document.getElementById('solution');
-                solutionBtn.innerHTML = 'Show Solution';
-                solutionBtn.disabled = false; 
-            }
-        }, 100);
+        global_ai_solution = solution;
     } else {
         alert("This puzzle cannot be solved!");
     }
