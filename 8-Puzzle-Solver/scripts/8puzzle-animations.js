@@ -105,23 +105,22 @@ function toggleCompleted() {
 }
 
 // Display Adjacent Elements
-function displayAdjacentElements(time) {
+async function displayAdjacentElements(time) {
     var gridArray = getCurrentGrid();
     let adjacentElements = getAdjacentElementsHtml(gridArray);
 
     // add ajacent classes to the tiles
     for (let i = 0; i < adjacentElements.length; i++) {
-        let element = document.getElementById(adjacentElements[i]);
+        let element = document.getElementById(`${adjacentElements[i]}`);
         element.classList.add('adjacent');
     }
 
     // wait 650 ms and remove the classes
-    setTimeout(function () {
-        for (let i = 0; i < adjacentElements.length; i++) {
-            let element = document.getElementById(adjacentElements[i]);
-            element.classList.remove('adjacent');
-        }
-    }, time);
+    await new Promise((resolve) => setTimeout(resolve, time));
+    for (let i = 0; i < adjacentElements.length; i++) {
+        let element = document.getElementById(`${adjacentElements[i]}`);
+        element.classList.remove('adjacent');
+    }
 }
 
 async function highlightMovedTile(grid1, grid2) {
