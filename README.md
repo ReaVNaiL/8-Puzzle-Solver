@@ -1,7 +1,8 @@
 # 8-Puzzle-Solver
 Project 2:  Problem Mapping into Search. Using A* Algorithm to find the Shortest path.
 
-![Screen Shot 2022-10-14 at 15 01 45](https://user-images.githubusercontent.com/59776018/196060595-9077d6e6-a4d1-4662-ae82-08ea91b79399.png)
+![ezgif com-gif-maker(2)](https://user-images.githubusercontent.com/59776018/196309049-25dda85b-7f42-41bf-aab3-0782cc0f3a78.gif)
+
 
 ## Problem Statement
 -- Given a 3x3 board with 8 tiles (1 to 8) and one empty space. The objective is to place the numbers on tiles to match final configuration using the empty space. We can slide four adjacent (left, right, above and below) tiles into the empty space.
