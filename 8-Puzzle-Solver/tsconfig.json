@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+       "target": "ESNext",
+       "module": "commonjs",
+       "allowJs": true,
+       "jsx": "react",
+       "strict": true,
+       "noImplicitAny": true,
+       "typeRoots": [
+          "src/@typings",
+          "src/actions/@types",
+          "src/components/@types",
+          "src/reducers/@types",
+          "node_modules/@types"
+       ],
+       "esModuleInterop": true,
+       "skipLibCheck": true,
+       "forceConsistentCasingInFileNames": true,
+       "resolveJsonModule": true,
+       "outDir": "./build",
+       
+    }
+  }
