@@ -156,6 +156,7 @@ async function solveGrid() {
         
         if (isSolved()) { 
             completePuzzle()
+            let statsBtn = document.getElementById('stats');
             let solutionBtn = document.getElementById('solution');
             solutionBtn.innerHTML = 'Show Solution';
             solutionBtn.disabled = false; 

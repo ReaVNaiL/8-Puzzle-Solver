@@ -1,15 +1,42 @@
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    background-color: #00000066;
+}
+
+.close-modal {
+    color: #fee2e9;
+    float: right;
+    font-size: 16px;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #ffb28c;
+    text-decoration: none;
+    cursor: pointer;
+    scale: 1.1;
+}
+
 .stats-box {
-    opacity: 70%;
+    animation: modal 0.5s;
     background-color: #1f28332b;
     color: #fee2e9;
     border-radius: 10px;
-    box-shadow: 4px 4px #1f283328, 5px 5px 5px #1f283348, 6px 6px 6px#1f28331e;
-    margin-top: 1%;
+    box-shadow: 4px 4px #fefefe29, 5px 5px 5px #fafafa47, 6px 6px 6px #1f28331e;
     padding: 1%;
     width: 70%;
-    height: 16%;
     max-width: 300px;
-    max-height: 125px;
+    border: 2px solid;
 }
 
 .container {
@@ -18,7 +45,7 @@
     align-items: center;
 }
 
-.stats-text{
+.stats-text {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,4 +53,15 @@
     font-weight: bold;
     margin: 0;
     padding: 0;
+}
+
+@keyframes modal {
+    from {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
