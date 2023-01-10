@@ -2,17 +2,18 @@
 <html>
     <head>
         <title>8-Puzzle Solver</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" href="favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="style/general.css"/>
-        <link rel="stylesheet" type="text/css" href="style/states.css"/>
-        <link rel="stylesheet" type="text/css" href="style/stats.css"/>
-        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="favicon.ico" />
+        <link rel="stylesheet" type="text/css" href="style/general.css" />
+        <link rel="stylesheet" type="text/css" href="style/states.css" />
+        <link rel="stylesheet" type="text/css" href="style/stats.css" />
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <div class="container hidden ease" id="container-box">
+        <div id="container-box" class="container hidden ease">
             <div class="stats-box completed">
+                <button class="close">X</button>
             </div>
         </div>
         <h1 class="title ease">8-Puzzle Solver</h1>
@@ -33,8 +34,8 @@
             <button class="btn2 btn-box ease" onclick="toggleCompleted()">Toggle Complete</button>
         </div>   -->
         <div class="btn-panel">
-            <button class="btn btn-box ease " id="reset"onclick="resetGrid()">Reset</button>
-            <button class="btn btn-box ease" id="solve"onclick="solveGrid()">Solve</button>
+            <button class="btn btn-box ease" id="reset" onclick="resetGrid()">Reset</button>
+            <button class="btn btn-box ease" id="solve" onclick="solveGrid()">Solve</button>
             <button class="btn btn-box ease" id="shuffle" onclick="shuffleGrid()">Shuffle</button>
             <button class="btn btn-box ease remove" id="solution" onclick="showSolution()">Show Solution</button>
         </div>

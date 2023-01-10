@@ -180,7 +180,7 @@ function clearStatsBox() {
     let boxElements = document.getElementsByClassName('stats-box');
 
     // Remove all elements from the stats box except the first 2
-    while (boxElements[0].children.length > 0) {
+    while (boxElements[0].children.length > 1) {
         boxElements[0].removeChild(boxElements[0].lastChild);
     }
 }
