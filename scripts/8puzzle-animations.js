@@ -38,15 +38,15 @@ function initializePuzzle() {
 
 // Hide Reset/Solve Buttons
 function hideButtons() {
-    document.getElementById('container-box').classList.remove('hidden');
-
     let solveButton = document.getElementById('solve');
     let resetButton = document.getElementById('reset');
     let shuffleButton = document.getElementById('shuffle');
+    let statsBtn = document.getElementById('stats');
     let solutionButton = document.getElementById('solution');
 
     solveButton.classList.add('remove');
     resetButton.classList.add('remove');
+    statsBtn.classList.remove('remove');
     shuffleButton.classList.remove('remove');
     solutionButton.classList.remove('remove');
 }
@@ -84,14 +84,14 @@ function showAllButtons() {
 
 // Reset Default Buttons
 function resetButtons() {
-    document.getElementById('container-box').classList.add('hidden');
-
     let solveButton = document.getElementById('solve');
     let resetButton = document.getElementById('reset');
     let solutionButton = document.getElementById('solution');
+    let statsBtn = document.getElementById('stats');
 
     solveButton.classList.remove('remove');
     resetButton.classList.remove('remove');
+    statsBtn.classList.add('remove');
     solutionButton.classList.add('remove');
     showAllButtons();
 }
@@ -184,3 +184,17 @@ function clearStatsBox() {
         boxElements[0].removeChild(boxElements[0].lastChild);
     }
 }
+
+let modal = document.getElementById('container-box');
+
+function openStatsModal() {
+    modal.style.removeProperty('display');
+}
+
+function closeStatsModal() {
+    modal.style.display = 'none';
+}
+
+modal.addEventListener('click', function () {
+    closeStatsModal();
+});

@@ -11,9 +11,9 @@
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <div id="container-box" class="container hidden ease">
+        <div id="container-box" class="modal container ease" style="display: none;">
             <div class="stats-box completed">
-                <button class="close">X</button>
+                <button id="close-modal-button" class="close-modal">X</button>
             </div>
         </div>
         <h1 class="title ease">8-Puzzle Solver</h1>
@@ -37,6 +37,7 @@
             <button class="btn btn-box ease" id="reset" onclick="resetGrid()">Reset</button>
             <button class="btn btn-box ease" id="solve" onclick="solveGrid()">Solve</button>
             <button class="btn btn-box ease" id="shuffle" onclick="shuffleGrid()">Shuffle</button>
+            <button class="btn btn-box ease remove" id="stats" onclick="openStatsModal()">Nerd Stats</button>
             <button class="btn btn-box ease remove" id="solution" onclick="showSolution()">Show Solution</button>
         </div>
     </body>

@@ -33,7 +33,6 @@
         10px 10px #1f283328,
         11px 11px #1f283348,
         12px 12px #1f28331e;
-    transform: translateX(-5px);
     background-image: linear-gradient(to right,  #2c2b30 0%, #3a3436 100%);
 }
 
@@ -55,7 +54,6 @@
     color: #fee2e9;
     text-shadow:
         1px 1px 10px #4f4f51, 2px 2px 3px #4f4f51, 3px 3px 3px #4f4f51;
-    transform: translateX(-5px);
     font-size: 4.5em;
     margin-top: 2%;
 }
