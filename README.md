@@ -2,7 +2,7 @@
 Using A* Algorithm to find the shortest solution to the 8 Puzzle.
 
 <p align="left">
-  <a href="https://www.8puzzleai.com/">
+  <a href="https://www.8puzzleai.com/" target="_blank">
     <img src="https://img.shields.io/badge/Live_Demo-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
   </a>
 </p>
