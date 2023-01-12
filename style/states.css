@@ -60,4 +60,5 @@
 
 .background-completed {
     background-image: linear-gradient(to top, #fee2e9 0%, #4f4f51 100%);
+    background-color: #4f4f51;
 }
