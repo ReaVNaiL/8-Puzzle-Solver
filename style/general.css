@@ -1,6 +1,7 @@
 body {
     height: 100vh;
-    background-image: linear-gradient(to top, #3f0931 0%, #99c48e 100%);
+    background: linear-gradient(to top, #3f0931 0%, #99c48e 100%);
+    background-color: linear-gradient(to top, #3f0931 0%, #99c48e 100%);
     overflow-y: hidden;
     font-family: 'Source Sans Pro', sans-serif;
 }
