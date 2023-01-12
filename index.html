@@ -15,6 +15,14 @@
         <link rel="stylesheet" type="text/css" href="style/states.css" />
         <link rel="stylesheet" type="text/css" href="style/stats.css" />
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css" />
+        <script>
+            if(navigator.userAgent.match(/iPhone/i)) {
+              var meta = document.createElement('meta');
+              meta.name = 'viewport';
+              meta.content = 'width=device-width, initial-scale=.90';
+              document.getElementsByTagName('head')[0].appendChild(meta);
+            }
+          </script>
     </head>
     <body>
         <div id="container-box" class="modal container ease" style="display: none;">

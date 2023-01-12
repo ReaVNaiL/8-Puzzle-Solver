@@ -1,6 +1,8 @@
 body {
     height: 100vh;
     background: linear-gradient(to top, #093f20 0%, #99c48e 75%);
+    /* Dark Mode */
+    /* background: linear-gradient(to top, hsl(0, 0%, 5%) 0%, hsl(0, 0%, 10%) 75%); */
     background-color: #99c48e;
     overflow-y: hidden;
     font-family: 'Source Sans Pro', sans-serif;
