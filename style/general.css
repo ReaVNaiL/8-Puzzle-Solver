@@ -1,4 +1,5 @@
 body {
+    margin-top: 25%;
     height: 100vh;
     background: linear-gradient(to top, #093f20 0%, #99c48e 75%);
     /* Dark Mode */
@@ -27,7 +28,6 @@ body {
     width: 40%;
     height: 35%;
     margin: 0 auto;
-    margin-top: 50px;
     background-color: #1f283372;
     border-radius: 10px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
