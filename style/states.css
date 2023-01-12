@@ -24,40 +24,45 @@
     scale: 0.98;
 }
 
-
 /* These are the completed states for the 8-puzzle game. */
 .completed {
-    scale : 1.1;
+    scale: 1.1;
     color: #d6d6d6;
-    box-shadow:
-        10px 10px #1f283328,
-        11px 11px #1f283348,
-        12px 12px #1f28331e;
-    background-image: linear-gradient(to right,  #2c2b30 0%, #3a3436 100%);
+    box-shadow: 10px 10px #1f283328, 11px 11px #1f283348, 12px 12px #1f28331e;
+    background-image: linear-gradient(to right, #2c2b30 0%, #3a3436 100%);
 }
 
-.completed:disabled {background-image: linear-gradient(to bottom, #7d3030 0%, #923150 100%);
+.completed:disabled {
+    background-image: linear-gradient(to bottom, #7d3030 0%, #923150 100%);
     color: #ffd8d9;
 }
 
 .completed > .grid-item {
     font-size: 4em;
     background-color: #4f4f51;
-    background-image: linear-gradient(to left,  #4f4f51 0%, #52494c 100%);
+    background-image: linear-gradient(to left, #4f4f51 0%, #52494c 100%);
     color: #fee2e9;
-    text-shadow: 2px 2px 2px #2c2b30
+    text-shadow: 2px 2px 2px #2c2b30;
 }
 
 .title-completed {
-    /* margin-top: 8%; */
     font-weight: bold;
     color: #fee2e9;
-    text-shadow:
-        1px 1px 10px #4f4f51, 2px 2px 3px #4f4f51, 3px 3px 3px #4f4f51;
+    text-shadow: 1px 1px 10px #4f4f51, 2px 2px 3px #4f4f51, 3px 3px 3px #4f4f51;
     font-size: 4.5em;
-    margin-top: 2%;
 }
 
 .background-completed {
     background-image: linear-gradient(to top, #fee2e9 0%, #4f4f51 100%);
+    background-color: #4f4f51;
+}
+
+@media only screen and (max-device-width: 480px) {
+    body {  
+        margin-top: 30%;
+    }
+
+    .title-completed {
+        margin-top: -20%;
+    }
 }
